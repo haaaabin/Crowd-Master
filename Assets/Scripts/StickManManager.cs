@@ -5,6 +5,7 @@ public class StickManManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem blood;
 
+
     void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -21,7 +22,7 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "ramp":
-                transform.DOJump(transform.position, 3f, 1, 1f).SetEase(Ease.Flash);
+                transform.parent.DOJump(transform.parent.position, 3f, 1, 1f).SetEase(Ease.Flash);
                 break;
         }
     }
