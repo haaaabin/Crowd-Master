@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - red
   - ramp
+  - stair
   layers:
   - Default
   - TransparentFX

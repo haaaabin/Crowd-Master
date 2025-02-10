@@ -1,12 +1,14 @@
 using System.Collections;
+using Cinemachine;
 using DG.Tweening;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerManager : MonoBehaviour
 {
-     public static PlayerManager instance;
+    public static PlayerManager instance;
 
     private int numberOfStickmans;
     private int numberOfEnemyStickmans;
@@ -27,7 +29,16 @@ public class PlayerManager : MonoBehaviour
     public float roadSpeed;
 
     public GameObject gameOverPanel;
+    public GameObject secondCam;
+    public bool isFinish;
 
+    void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +57,18 @@ public class PlayerManager : MonoBehaviour
         {
             MoveThePlayer();
         }
+
+        if (gameState)
+        {
+            road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
+
+            for (int i = 1; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<Animator>() != null)
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
+            }
+        }
+
     }
 
     private void MoveThePlayer()
@@ -91,15 +114,6 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if (gameState)
-        {
-            road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
-
-            for (int i = 1; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
-            }
-        }
     }
 
     private void HandleAttack()
@@ -133,10 +147,10 @@ public class PlayerManager : MonoBehaviour
             EndAttack();
         }
 
-        if (transform.childCount == 1)
+        if (transform.childCount == 1 || isFinish)
         {
-            enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
             gameState = false;
+            enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
             gameObject.SetActive(false);
             Invoke("GameOver", 0.1f);
         }
@@ -218,6 +232,14 @@ public class PlayerManager : MonoBehaviour
             roadSpeed = 1f;
             other.transform.GetChild(1).GetComponent<EnemyManager>().Attack(transform);
             StartCoroutine(UpdateStickManNumbers());
+        }
+
+        if (other.CompareTag("Finish"))
+        {
+            isFinish = true;
+            secondCam.SetActive(true);
+            Tower.instance.CreateTower(transform.childCount - 1);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
