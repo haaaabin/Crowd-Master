@@ -22,7 +22,7 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "ramp":
-                transform.parent.DOJump(transform.parent.position, 3f, 1, 1f).SetEase(Ease.Flash);
+                transform.parent.DOJump(transform.parent.position, 4f, 1, 1.3f).SetEase(Ease.Flash);
                 break;
         }
     }
