@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using TMPro;
 using Unity.Mathematics;
@@ -5,20 +6,27 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+     public static PlayerManager instance;
+
     private int numberOfStickmans;
+    private int numberOfEnemyStickmans;
     [SerializeField] private TextMeshPro counterTxt;
     [SerializeField] private GameObject stickMan;
-
-    // 스틱맨의 원형 배열 제어
-    [Range(0f, 1f)][SerializeField] private float distanceFactor, radius;
-
-    public bool moveByTouch, gameState;
-    private Vector3 mouseStartPos, playerStartPos;
-    public float playerSpeed, roadSpeed;
     [SerializeField] private Transform road;
     [SerializeField] private Transform enemy;
+    [Range(0f, 1f)][SerializeField] private float distanceFactor;   // 원형 배열 간격
+    [Range(0f, 1f)][SerializeField] private float radius;           // 원형 배열 각도
 
+    public bool moveByTouch;
+    public bool gameState;
     private bool isAttack;
+
+    private Vector3 mouseStartPos;
+    private Vector3 playerStartPos;
+    public float playerSpeed;
+    public float roadSpeed;
+
+    public GameObject gameOverPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -28,19 +36,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (isAttack)
         {
-            // y축을 고정하여 2차원 평면에서의 방향을 계산
-            var enemyDirection = new Vector3(enemy.position.x, transform.position.y, enemy.position.z) - transform.position;
-
-            // 각 스틱맨을 적을 향해 부드럽게 회전시킨다.
-            for (int i = 1; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).rotation =
-                     Quaternion.Slerp(transform.GetChild(i).rotation, Quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 3f);
-            }
+            HandleAttack();
         }
         else
         {
@@ -94,7 +94,72 @@ public class PlayerManager : MonoBehaviour
         if (gameState)
         {
             road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
+
+            for (int i = 1; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
+            }
         }
+    }
+
+    private void HandleAttack()
+    {
+        // y축을 고정하여 2차원 평면에서의 방향을 계산
+        var enemyDirection = new Vector3(enemy.position.x, transform.position.y, enemy.position.z) - transform.position;
+
+        // 각 스틱맨을 적을 향해 부드럽게 회전시킨다.
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).rotation =
+                    Quaternion.Slerp(transform.GetChild(i).rotation, Quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 3f);
+        }
+
+        if (enemy.GetChild(1).childCount > 1)
+        {
+            for (int i = 1; i < transform.childCount; i++)
+            {
+                var distance = enemy.GetChild(1).GetChild(0).position - transform.GetChild(i).position;
+
+                if (distance.magnitude < 6f)
+                {
+                    transform.GetChild(i).position = Vector3.Lerp(transform.GetChild(i).position,
+                            new Vector3(enemy.GetChild(1).GetChild(0).position.x, transform.GetChild(i).position.y,
+                                enemy.GetChild(1).GetChild(0).position.z), Time.deltaTime * 1f);
+                }
+            }
+        }
+        else
+        {
+            EndAttack();
+        }
+
+        if (transform.childCount == 1)
+        {
+            enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
+            gameState = false;
+            gameObject.SetActive(false);
+            Invoke("GameOver", 0.1f);
+        }
+    }
+
+    private void EndAttack()
+    {
+        isAttack = false;
+        roadSpeed = 6f;
+
+        FormatStickMan();
+
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).rotation = Quaternion.identity;
+        }
+
+        enemy.gameObject.SetActive(false);
+    }
+
+    private void GameOver()
+    {
+        gameOverPanel.SetActive(true);
     }
 
     // 플레이어 중심으로 스틱맨을 원형으로 배열
@@ -107,7 +172,7 @@ public class PlayerManager : MonoBehaviour
 
             var NewPos = new Vector3(x, 0f, z);
 
-            transform.GetChild(i).DOLocalMove(NewPos, 1f).SetEase(Ease.OutBack);
+            transform.GetChild(i).DOLocalMove(NewPos, 0.5f).SetEase(Ease.OutBack);
         }
     }
 
@@ -149,6 +214,38 @@ public class PlayerManager : MonoBehaviour
         {
             enemy = other.transform;
             isAttack = true;
+
+            roadSpeed = 1f;
+            other.transform.GetChild(1).GetComponent<EnemyManager>().Attack(transform);
+            StartCoroutine(UpdateStickManNumbers());
+        }
+    }
+
+    IEnumerator UpdateStickManNumbers()
+    {
+        if (enemy == null || enemy.GetChild(1) == null)
+        {
+            yield break;
+        }
+
+        numberOfEnemyStickmans = enemy.transform.GetChild(1).childCount;
+        numberOfStickmans = transform.childCount - 1;
+
+        while (numberOfEnemyStickmans > 0 && numberOfStickmans > 0)
+        {
+            numberOfEnemyStickmans--;
+            numberOfStickmans--;
+
+            enemy.transform.GetChild(1).GetComponent<EnemyManager>().counterTxt.text = numberOfEnemyStickmans.ToString();
+            counterTxt.text = numberOfStickmans.ToString();
+
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        if (numberOfEnemyStickmans == 0)
+        {
+            for (int i = 1; i < transform.childCount; i++)
+                transform.GetChild(i).rotation = Quaternion.identity;
         }
     }
 }

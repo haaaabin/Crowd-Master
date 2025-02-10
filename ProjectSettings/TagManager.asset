@@ -6,6 +6,8 @@ TagManager:
   tags:
   - gate
   - enemy
+  - red
+  - Ramp
   layers:
   - Default
   - TransparentFX

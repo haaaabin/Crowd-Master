@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.54500014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
       propertyPath: m_LocalPosition.z
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e7608e954ba2dfa41bce9ced101f88df, type: 2}
     - target: {fileID: 919132149155446097, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Character_Blue
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
       propertyPath: m_Controller
@@ -90,6 +90,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8095514552561110457}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6902371902598775645}
   m_SourcePrefab: {fileID: 100100000, guid: e48588beb4817ad4fa23a90a1c59c154, type: 3}
 --- !u!1 &2346381254803044115 stripped
 GameObject:
@@ -138,7 +141,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -146,3 +149,16 @@ CapsuleCollider:
   m_Height: 0.34
   m_Direction: 1
   m_Center: {x: 0, y: 0.16, z: 0}
+--- !u!114 &6902371902598775645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346381254803044115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c54eea6e428d424ca6ddd68dc8a9074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blood: {fileID: 7673296222006189919, guid: 4defbd4232a3b204ca8a086f9eca7f44, type: 3}
