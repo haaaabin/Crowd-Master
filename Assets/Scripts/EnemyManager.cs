@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < Random.Range(10, 50); i++)
+        for (int i = 0; i < Random.Range(20, 120); i++)
         {
             Instantiate(stickMan, transform.position, new Quaternion(0f, 180f, 0f, 1f), transform);
         }
