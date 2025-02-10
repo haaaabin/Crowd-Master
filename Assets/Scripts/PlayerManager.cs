@@ -120,7 +120,7 @@ public class PlayerManager : MonoBehaviour
             {
                 var distance = enemy.GetChild(1).GetChild(0).position - transform.GetChild(i).position;
 
-                if (distance.magnitude < 6f)
+                if (distance.magnitude < 5.5f)
                 {
                     transform.GetChild(i).position = Vector3.Lerp(transform.GetChild(i).position,
                             new Vector3(enemy.GetChild(1).GetChild(0).position.x, transform.GetChild(i).position.y,
