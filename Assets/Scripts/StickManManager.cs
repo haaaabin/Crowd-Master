@@ -4,7 +4,12 @@ using UnityEngine;
 public class StickManManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem blood;
+    private Transform counterLabel;
 
+    void Start()
+    {
+        counterLabel = transform.parent.Find("CounterLabel");
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -22,7 +27,16 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "ramp":
-                transform.parent.DOJump(transform.parent.position, 4f, 1, 1.3f).SetEase(Ease.Flash);
+                Vector3 labelStartPos = counterLabel.localPosition;
+
+                transform.DOJump(transform.position, 3f, 1, 1f).SetEase(Ease.Flash);
+                counterLabel.DOLocalMoveY(labelStartPos.y + 0.5f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
+                        counterLabel.DOLocalMoveY(labelStartPos.y, 0.5f).SetEase(Ease.InQuad));
+                break;
+
+            case "stair":
+                Debug.Log("stair");
+                
                 break;
         }
     }
