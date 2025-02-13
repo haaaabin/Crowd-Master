@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -5,10 +6,16 @@ public class StickManManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem blood;
     private Transform counterLabel;
+    private Rigidbody rigid;
+    private CapsuleCollider coll;
+    private Animator anim;
 
     void Start()
     {
         counterLabel = transform.parent.Find("CounterLabel");
+        rigid = GetComponent<Rigidbody>();
+        coll = GetComponent<CapsuleCollider>();
+        anim = GetComponent<Animator>();
     }
 
     void OnTriggerEnter(Collider other)
@@ -35,7 +42,15 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "stair":
-                Debug.Log("stair");
+                transform.parent.parent = null;
+                transform.parent = null;
+                coll.isTrigger = false;
+                rigid.isKinematic = false;
+                
+                anim.SetBool("run", false);
+
+                if (!PlayerManager.instance.moveTheCamera)
+                    PlayerManager.instance.moveTheCamera = true;
                 
                 break;
         }

@@ -30,7 +30,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject gameOverPanel;
     public GameObject secondCam;
-    public bool isFinish;
+    [HideInInspector] public bool isFinish;
+    [HideInInspector] public bool moveTheCamera;
 
     void Awake()
     {
@@ -67,6 +68,21 @@ public class PlayerManager : MonoBehaviour
                 if (transform.GetChild(i).GetComponent<Animator>() != null)
                     transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
             }
+        }
+
+        if (moveTheCamera && transform.childCount > 1)
+        {
+            var cinemachineTransposer = secondCam.GetComponent<CinemachineVirtualCamera>()
+                .GetCinemachineComponent<CinemachineTransposer>();
+
+            var cinemachineComposer = secondCam.GetComponent<CinemachineVirtualCamera>()
+                .GetCinemachineComponent<CinemachineComposer>();
+
+            cinemachineTransposer.m_FollowOffset = new Vector3(cinemachineTransposer.m_FollowOffset.x, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
+                transform.GetChild(1).position.y + 6f , Time.deltaTime * 1f), cinemachineTransposer.m_FollowOffset.z);
+
+            cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
+                4f, Time.deltaTime * 1f), 0f);
         }
 
     }
@@ -239,7 +255,7 @@ public class PlayerManager : MonoBehaviour
             isFinish = true;
             secondCam.SetActive(true);
             Tower.instance.CreateTower(transform.childCount - 1);
-            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).gameObject.SetActive(false);        
         }
     }
 
