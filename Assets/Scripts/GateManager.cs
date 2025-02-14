@@ -17,7 +17,7 @@ public class GateManager : MonoBehaviour
         }
         else
         {
-            randomNumber = Random.Range(10, 50);
+            randomNumber = Random.Range(10, 60);
 
             //짝수로 맞추기
             if (randomNumber % 2 != 0)
