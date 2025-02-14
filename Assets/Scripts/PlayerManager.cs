@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject secondCam;
     [HideInInspector] public bool isFinish;
     [HideInInspector] public bool moveTheCamera;
+    private Transform firstChild;
 
     void Awake()
     {
@@ -45,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     {
         numberOfStickmans = transform.childCount - 1;
         counterTxt.text = numberOfStickmans.ToString();
+        firstChild = transform.GetChild(1);
     }
 
     // Update is called once per frame
@@ -59,36 +61,37 @@ public class PlayerManager : MonoBehaviour
             MoveThePlayer();
         }
 
+        if (transform.childCount == 1 && isFinish)
+        {
+            gameState = false;
+        }
+
         if (gameState)
         {
             road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
-
-            for (int i = 1; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).GetComponent<Animator>() != null)
-                    transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
-            }
         }
+
 
         if (moveTheCamera && transform.childCount > 1)
         {
             var cinemachineTransposer = secondCam.GetComponent<CinemachineVirtualCamera>()
-                .GetCinemachineComponent<CinemachineTransposer>();
+              .GetCinemachineComponent<CinemachineTransposer>();
 
             var cinemachineComposer = secondCam.GetComponent<CinemachineVirtualCamera>()
                 .GetCinemachineComponent<CinemachineComposer>();
 
-            cinemachineTransposer.m_FollowOffset = new Vector3(cinemachineTransposer.m_FollowOffset.x, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
-                transform.GetChild(1).position.y + 6f , Time.deltaTime * 1f), cinemachineTransposer.m_FollowOffset.z);
+            cinemachineTransposer.m_FollowOffset = new Vector3(13f, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
+                firstChild.position.y + 6f, Time.deltaTime * 3f), -13f);
 
             cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
-                4f, Time.deltaTime * 1f), 0f);
-        }
+                firstChild.position.y, Time.deltaTime * 3f), 0f);
 
+        }
     }
 
     private void MoveThePlayer()
     {
+        if (isFinish) return;
         if (Input.GetMouseButtonDown(0) && gameState)
         {
             moveByTouch = true;
@@ -129,7 +132,6 @@ public class PlayerManager : MonoBehaviour
                                  transform.position.y, transform.position.z);
             }
         }
-
     }
 
     private void HandleAttack()
@@ -253,9 +255,11 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("Finish"))
         {
             isFinish = true;
+            moveByTouch = false;
+
             secondCam.SetActive(true);
             Tower.instance.CreateTower(transform.childCount - 1);
-            transform.GetChild(0).gameObject.SetActive(false);        
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
