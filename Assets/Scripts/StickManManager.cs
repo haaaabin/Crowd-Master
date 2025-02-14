@@ -46,13 +46,30 @@ public class StickManManager : MonoBehaviour
                 transform.parent = null;
                 coll.isTrigger = false;
                 rigid.isKinematic = false;
-                
+
                 anim.SetBool("run", false);
 
                 if (!PlayerManager.instance.moveTheCamera)
                     PlayerManager.instance.moveTheCamera = true;
-                
+
+                if (PlayerManager.instance.transform.childCount == 2)
+                {
+                    StartCoroutine(ChangeStairRender(other));
+                }
+
                 break;
+        }
+    }
+
+    IEnumerator ChangeStairRender(Collider other)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        Renderer stairRender = other.GetComponent<Renderer>();
+        if (stairRender != null)
+        {
+            stairRender.material.DOColor(new Color(0.4f, 0.98f, 0.65f), 0.5f).SetLoops(1000, LoopType.Yoyo)
+                .SetEase(Ease.Flash);
         }
     }
 }
