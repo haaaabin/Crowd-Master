@@ -1,21 +1,21 @@
-using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
 public class StickManManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem blood;
-    private Transform counterLabel;
     private Rigidbody rigid;
     private CapsuleCollider coll;
     private Animator anim;
 
     void Start()
     {
-        counterLabel = transform.parent.Find("CounterLabel");
         rigid = GetComponent<Rigidbody>();
         coll = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
+
+        anim.SetBool("run", true);
     }
 
     void OnTriggerEnter(Collider other)
@@ -34,11 +34,7 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "ramp":
-                Vector3 labelStartPos = counterLabel.localPosition;
-
-                transform.DOJump(transform.position, 3f, 1, 1f).SetEase(Ease.Flash);
-                counterLabel.DOLocalMoveY(labelStartPos.y + 0.5f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
-                        counterLabel.DOLocalMoveY(labelStartPos.y, 0.5f).SetEase(Ease.InQuad));
+                transform.parent.DOJump(transform.parent.position, 3f, 1, 1.5f).SetEase(Ease.Flash);
                 break;
 
             case "stair":
