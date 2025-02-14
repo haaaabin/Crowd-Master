@@ -69,6 +69,12 @@ public class PlayerManager : MonoBehaviour
         if (gameState)
         {
             road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
+
+            for (int i = 1; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<Animator>() != null)
+                    transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
+            }
         }
 
 
@@ -81,10 +87,10 @@ public class PlayerManager : MonoBehaviour
                 .GetCinemachineComponent<CinemachineComposer>();
 
             cinemachineTransposer.m_FollowOffset = new Vector3(13f, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
-                firstChild.position.y + 6f, Time.deltaTime * 3f), -13f);
+                transform.GetChild(1).position.y + 20f, Time.deltaTime * 3f), -13f);
 
             cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
-                firstChild.position.y, Time.deltaTime * 3f), 0f);
+                transform.GetChild(1).position.y +5f, Time.deltaTime * 3f), 0f);
 
         }
     }
