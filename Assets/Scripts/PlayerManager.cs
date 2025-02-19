@@ -174,7 +174,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         // 모든 스틱맨이 제거되었을 때
-        if (transform.childCount <= 0)
         if (transform.childCount - 1 <= 0)
         {
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
