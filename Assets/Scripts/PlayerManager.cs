@@ -58,7 +58,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (!gameState) return;
 
-        counterLabel.SetActive(true);
         road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
 
         if (isAttack)
@@ -78,7 +77,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (!moveTheCamera || transform.childCount <= 1) return;
 
-        GameObject tower0 = GameObject.Find("Tower0");
+        GameObject tower0 = GameObject.Find("Character_Blue");
 
         var cinemachineTransposer = secondCam.GetComponent<CinemachineVirtualCamera>()
               .GetCinemachineComponent<CinemachineTransposer>();
@@ -90,7 +89,7 @@ public class PlayerManager : MonoBehaviour
             tower0.transform.position.y + 20f, Time.deltaTime * 3f), -13f);
 
         cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
-            tower0.transform.position.y + 5f, Time.deltaTime * 3f), 0f);
+           tower0.transform.position.y + 5f, Time.deltaTime * 3f), 0f);
 
     }
 
@@ -269,9 +268,10 @@ public class PlayerManager : MonoBehaviour
         {
             isFinish = true;
             moveByTouch = false;
+            moveTheCamera = true;
 
-            secondCam.SetActive(true);
             transform.GetChild(0).gameObject.SetActive(false);
+            secondCam.SetActive(true);
             Tower.instance.CreateTower(transform.childCount - 1);
         }
     }
