@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UIElements;
 
 public class Tower : MonoBehaviour
 {
@@ -113,6 +112,10 @@ public class Tower : MonoBehaviour
 
             towerId++;
             yield return new WaitForSecondsRealtime(0.2f);
+
         }
+
+        yield return new WaitForSecondsRealtime(1f);
+        ObjectPool.instance.ClearPlayerObjects();
     }
 }
