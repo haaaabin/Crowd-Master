@@ -18,7 +18,6 @@ public class PlayerManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float distanceFactor;   // 원형 배열 간격
     [Range(0f, 1f)][SerializeField] private float radius;           // 원형 배열 각도
 
-
     public bool moveByTouch;
     public bool gameState;
     private bool isAttack;
@@ -33,7 +32,6 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isFinish;
     [HideInInspector] public bool moveTheCamera;
     [SerializeField] private GameObject counterLabel;
-
 
     void Awake()
     {
@@ -177,6 +175,7 @@ public class PlayerManager : MonoBehaviour
 
         // 모든 스틱맨이 제거되었을 때
         if (transform.childCount <= 0)
+        if (transform.childCount - 1 <= 0)
         {
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
             gameObject.SetActive(false);
@@ -223,12 +222,18 @@ public class PlayerManager : MonoBehaviour
 
         for (int i = 0; i < newStickManCount; i++)
         {
-            Instantiate(stickMan, transform.position, quaternion.identity, transform);
+            GameObject newStickman = ObjectPool.instance.GetPlayerObject();
+            newStickman.transform.position = transform.position;
+            newStickman.transform.rotation = Quaternion.identity;
+
+            // 객체 풀에서 가져오면 먼저 활성화된 상태로 설정
+            newStickman.SetActive(true);
+            newStickman.GetComponent<Animator>().SetBool("run", true);
+
+            newStickman.transform.SetParent(transform);
+            numberOfStickmans++;
         }
-
-        numberOfStickmans = transform.childCount - 1;
-        counterTxt.text = numberOfStickmans.ToString();
-
+        UpdateCounterText();
         FormatStickMan();
     }
 
@@ -266,10 +271,9 @@ public class PlayerManager : MonoBehaviour
             isFinish = true;
             moveByTouch = false;
 
-            transform.GetChild(0).gameObject.SetActive(false);
-            Debug.Log(transform.GetChild(0).gameObject);
             secondCam.SetActive(true);
-            Tower.instance.CreateTower(numberOfStickmans);
+            transform.GetChild(0).gameObject.SetActive(false);
+            Tower.instance.CreateTower(transform.childCount - 1);
         }
     }
 
@@ -281,23 +285,29 @@ public class PlayerManager : MonoBehaviour
         }
 
         numberOfEnemyStickmans = enemy.transform.GetChild(1).childCount;
-        numberOfStickmans = transform.childCount - 1;
 
-        while (numberOfEnemyStickmans > 0 && numberOfStickmans > 0)
+        while (numberOfStickmans > 0 && numberOfEnemyStickmans > 0)
         {
+            Transform enemyStickman = enemy.transform.GetChild(1).GetChild(numberOfEnemyStickmans - 1);
+            Destroy(enemyStickman.gameObject);
             numberOfEnemyStickmans--;
-            numberOfStickmans--;
-
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().counterTxt.text = numberOfEnemyStickmans.ToString();
+
+            // 마지막 스틱맨을 꺼내서 객체 풀로 반환
+            Transform stickman = transform.GetChild(numberOfStickmans);
+            ObjectPool.instance.ReturnPlayerObject(stickman.gameObject); // 객체 풀로 반환
+            numberOfStickmans--;
             counterTxt.text = numberOfStickmans.ToString();
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.02f);
         }
 
+        // 적 스틱맨이 모두 제거되었을 때, 스틱맨 회전 리셋
         if (numberOfEnemyStickmans == 0)
         {
             for (int i = 1; i < transform.childCount; i++)
                 transform.GetChild(i).rotation = Quaternion.identity;
         }
+        FormatStickMan();
     }
 }
