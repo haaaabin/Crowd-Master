@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
 
-    private int numberOfStickmans;
+    public int numberOfStickmans;
     private int numberOfEnemyStickmans;
     [SerializeField] private TextMeshPro counterTxt;
     [SerializeField] private GameObject stickMan;

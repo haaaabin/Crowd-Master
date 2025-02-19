@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Text.RegularExpressions;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StickManManager : MonoBehaviour
 {
@@ -44,6 +47,7 @@ public class StickManManager : MonoBehaviour
                 if (PlayerManager.instance.transform.childCount == 2)
                 {
                     StartCoroutine(ChangeStairRender(other));
+                    StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
                 }
 
                 break;
@@ -67,4 +71,20 @@ public class StickManManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         PlayerManager.instance.FormatStickMan();
     }
+
+    private float UpdateTextWithScore(GameObject gameObject)
+    {
+        string scoreText = Regex.Match(gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text, @"\d+(\.\d+)?").Value;
+
+        if (float.TryParse(scoreText, out float number))
+        {
+            return number;
+        }
+        else
+        {
+            return 0f;
+        }
+
+    }
+
 }
