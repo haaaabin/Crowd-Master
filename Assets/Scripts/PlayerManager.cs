@@ -273,6 +273,7 @@ public class PlayerManager : MonoBehaviour
             transform.GetChild(0).gameObject.SetActive(false);
             secondCam.SetActive(true);
             Tower.instance.CreateTower(transform.childCount - 1);
+            numberOfStickmans = transform.childCount - 1;
         }
     }
 
