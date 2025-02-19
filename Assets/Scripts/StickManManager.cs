@@ -23,18 +23,11 @@ public class StickManManager : MonoBehaviour
         switch (other.tag)
         {
             case "red":
-                if (other.transform.parent.childCount > 0)
-                {
-                    Destroy(other.gameObject);
-                    Destroy(gameObject);
-
-                    Instantiate(blood, new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-                }
-
+                Instantiate(blood, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
                 break;
 
             case "ramp":
-                transform.parent.DOJump(transform.parent.position, 3f, 1, 1.5f).SetEase(Ease.Flash);
+                transform.DOJump(transform.position, 3f, 1, 1).SetEase(Ease.Flash).OnComplete(() => StartCoroutine(DelayedFormatStickMan(0.8f)));
                 break;
 
             case "stair":
@@ -67,5 +60,11 @@ public class StickManManager : MonoBehaviour
             stairRender.material.DOColor(new Color(0.4f, 0.98f, 0.65f), 0.5f).SetLoops(1000, LoopType.Yoyo)
                 .SetEase(Ease.Flash);
         }
+    }
+
+    IEnumerator DelayedFormatStickMan(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PlayerManager.instance.FormatStickMan();
     }
 }
