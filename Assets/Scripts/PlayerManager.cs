@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
         {
             instance = this;
         }
+        DOTween.SetTweensCapacity(3125, 100); // 트윈 3125개, 시퀀스 100개로 설정
     }
     // Start is called before the first frame update
     void Start()
