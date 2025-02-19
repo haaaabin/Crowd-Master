@@ -2,9 +2,8 @@ using System.Collections;
 using Cinemachine;
 using DG.Tweening;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class PlayerManager : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float distanceFactor;   // 원형 배열 간격
     [Range(0f, 1f)][SerializeField] private float radius;           // 원형 배열 각도
 
+
     public bool moveByTouch;
     public bool gameState;
     private bool isAttack;
@@ -32,7 +32,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject secondCam;
     [HideInInspector] public bool isFinish;
     [HideInInspector] public bool moveTheCamera;
-    private Transform firstChild;
+    [SerializeField] private GameObject counterLabel;
+
 
     void Awake()
     {
@@ -44,60 +45,60 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateCounterText();
+    }
+
+    private void UpdateCounterText()
+    {
         numberOfStickmans = transform.childCount - 1;
         counterTxt.text = numberOfStickmans.ToString();
-        firstChild = transform.GetChild(1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!gameState) return;
+
+        counterLabel.SetActive(true);
+        road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
+
         if (isAttack)
         {
             HandleAttack();
         }
         else
-        {
             MoveThePlayer();
-        }
+
+        HandleCameraMovement();
 
         if (transform.childCount == 1 && isFinish)
-        {
             gameState = false;
-        }
+    }
 
-        if (gameState)
-        {
-            road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
+    private void HandleCameraMovement()
+    {
+        if (!moveTheCamera || transform.childCount <= 1) return;
 
-            for (int i = 1; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).GetComponent<Animator>() != null)
-                    transform.GetChild(i).GetComponent<Animator>().SetBool("run", true);
-            }
-        }
+        GameObject tower0 = GameObject.Find("Tower0");
 
-
-        if (moveTheCamera && transform.childCount > 1)
-        {
-            var cinemachineTransposer = secondCam.GetComponent<CinemachineVirtualCamera>()
+        var cinemachineTransposer = secondCam.GetComponent<CinemachineVirtualCamera>()
               .GetCinemachineComponent<CinemachineTransposer>();
 
-            var cinemachineComposer = secondCam.GetComponent<CinemachineVirtualCamera>()
-                .GetCinemachineComponent<CinemachineComposer>();
+        var cinemachineComposer = secondCam.GetComponent<CinemachineVirtualCamera>()
+            .GetCinemachineComponent<CinemachineComposer>();
 
-            cinemachineTransposer.m_FollowOffset = new Vector3(13f, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
-                transform.GetChild(1).position.y + 20f, Time.deltaTime * 3f), -13f);
+        cinemachineTransposer.m_FollowOffset = new Vector3(13f, Mathf.Lerp(cinemachineTransposer.m_FollowOffset.y,
+            tower0.transform.position.y + 20f, Time.deltaTime * 3f), -13f);
 
-            cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
-                transform.GetChild(1).position.y +5f, Time.deltaTime * 3f), 0f);
+        cinemachineComposer.m_TrackedObjectOffset = new Vector3(0f, Mathf.Lerp(cinemachineComposer.m_TrackedObjectOffset.y,
+            tower0.transform.position.y + 5f, Time.deltaTime * 3f), 0f);
 
-        }
     }
 
     private void MoveThePlayer()
     {
         if (isFinish) return;
+
         if (Input.GetMouseButtonDown(0) && gameState)
         {
             moveByTouch = true;
@@ -149,20 +150,22 @@ public class PlayerManager : MonoBehaviour
         for (int i = 1; i < transform.childCount; i++)
         {
             transform.GetChild(i).rotation =
-                    Quaternion.Slerp(transform.GetChild(i).rotation, Quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 3f);
+                    Quaternion.Slerp(transform.GetChild(i).rotation, Quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 1.5f);
         }
 
-        if (enemy.GetChild(1).childCount > 1)
+        if (enemy.GetChild(1).childCount > 0)
         {
             for (int i = 1; i < transform.childCount; i++)
             {
-                var distance = enemy.GetChild(1).GetChild(0).position - transform.GetChild(i).position;
+                var stickman = transform.GetChild(i);
+                var distance = enemy.GetChild(1).GetChild(0).position - stickman.position;
 
-                if (distance.magnitude < 5.5f)
+                // 스틱맨이 적에게 가까워지면 Lerp로 이동
+                if (distance.magnitude < 4f)
                 {
-                    transform.GetChild(i).position = Vector3.Lerp(transform.GetChild(i).position,
-                            new Vector3(enemy.GetChild(1).GetChild(0).position.x, transform.GetChild(i).position.y,
-                                enemy.GetChild(1).GetChild(0).position.z), Time.deltaTime * 1f);
+                    stickman.position = Vector3.Lerp(stickman.position,
+                        new Vector3(enemy.GetChild(1).GetChild(0).position.x, stickman.position.y,
+                        enemy.GetChild(1).GetChild(0).position.z), Time.deltaTime);
                 }
             }
         }
@@ -171,17 +174,18 @@ public class PlayerManager : MonoBehaviour
             EndAttack();
         }
 
-        if (transform.childCount == 1 || isFinish)
+        // 모든 스틱맨이 제거되었을 때
+        if (transform.childCount <= 0)
         {
-            gameState = false;
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
             gameObject.SetActive(false);
-            Invoke("GameOver", 0.1f);
+            Invoke("GameOverPanel", 0.5f);
         }
     }
 
     private void EndAttack()
     {
+        enemy.gameObject.SetActive(false);
         isAttack = false;
         roadSpeed = 6f;
 
@@ -191,17 +195,15 @@ public class PlayerManager : MonoBehaviour
         {
             transform.GetChild(i).rotation = Quaternion.identity;
         }
-
-        enemy.gameObject.SetActive(false);
     }
 
-    private void GameOver()
+    private void GameOverPanel()
     {
         gameOverPanel.SetActive(true);
     }
 
     // 플레이어 중심으로 스틱맨을 원형으로 배열
-    private void FormatStickMan()
+    public void FormatStickMan()
     {
         for (int i = 1; i < transform.childCount; i++)
         {
@@ -216,7 +218,9 @@ public class PlayerManager : MonoBehaviour
 
     private void MakeStickMan(int number)
     {
-        for (int i = numberOfStickmans; i < number; i++)
+        int newStickManCount = number - numberOfStickmans; //추가로 생성해야 하는 스틱맨 수
+
+        for (int i = 0; i < newStickManCount; i++)
         {
             Instantiate(stickMan, transform.position, quaternion.identity, transform);
         }
@@ -236,8 +240,6 @@ public class PlayerManager : MonoBehaviour
 
             var gateManager = other.GetComponent<GateManager>();
 
-            numberOfStickmans = transform.childCount - 1;
-
             if (gateManager.multiply)
             {
                 MakeStickMan(numberOfStickmans * gateManager.randomNumber);
@@ -253,8 +255,8 @@ public class PlayerManager : MonoBehaviour
             enemy = other.transform;
             isAttack = true;
 
-            roadSpeed = 1f;
-            other.transform.GetChild(1).GetComponent<EnemyManager>().Attack(transform);
+            roadSpeed = 2f;
+            other.transform.GetChild(1).GetComponent<EnemyManager>().Attacking(transform);
             StartCoroutine(UpdateStickManNumbers());
         }
 
@@ -263,13 +265,14 @@ public class PlayerManager : MonoBehaviour
             isFinish = true;
             moveByTouch = false;
 
-            secondCam.SetActive(true);
-            Tower.instance.CreateTower(transform.childCount - 1);
             transform.GetChild(0).gameObject.SetActive(false);
+            Debug.Log(transform.GetChild(0).gameObject);
+            secondCam.SetActive(true);
+            Tower.instance.CreateTower(numberOfStickmans);
         }
     }
 
-    IEnumerator UpdateStickManNumbers()
+    public IEnumerator UpdateStickManNumbers()
     {
         if (enemy == null || enemy.GetChild(1) == null)
         {
