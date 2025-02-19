@@ -40,7 +40,7 @@ public class EnemyManager : MonoBehaviour
         {
             transform.GetChild(i).rotation = Quaternion.Slerp(transform.GetChild(i).rotation, quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 3f);
 
-            if (enemy.childCount > 0)
+            if (enemy.childCount > 1)
             {
                 var distance = enemy.GetChild(1).position - transform.GetChild(i).position;
 
