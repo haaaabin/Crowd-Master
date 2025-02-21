@@ -4,15 +4,15 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
 using System.Collections;
+using System.Xml.Serialization;
 
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public Button playBtn;
+    public Button tapToPlayBtn;
     public GameObject gameStartPanel;
     public Image handIcon;
-
 
     public GameObject panel;
     public TextMeshProUGUI scoreText;
@@ -31,8 +31,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playBtn.transform.DOScale(1.2f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-        playBtn.onClick.AddListener(() =>
+        tapToPlayBtn.transform.DOScale(1.2f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+        tapToPlayBtn.onClick.AddListener(() =>
         {
             gameStartPanel.SetActive(false);
             PlayerManager.instance.gameState = true;
@@ -55,7 +55,10 @@ public class UIManager : MonoBehaviour
 
         score = numStickmans;
         score *= curscore;
-        scoreText.text = (score * 10).ToString();
+        score *= 10;
+        scoreText.text = score.ToString();
         feverText.text = $"Great!!\n <size=80>X    {numStickmans}\n     X{curscore:F1}</size=80>";
+
+        RewardManager.instance.RewardPileOfCoin((int)score);
     }
 }
