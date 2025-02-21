@@ -8,6 +8,7 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private int poolSize = 100;
+    private GameObject poolParent;
     private Queue<GameObject> playerPool = new Queue<GameObject>();
 
     void Awake()
@@ -17,10 +18,13 @@ public class ObjectPool : MonoBehaviour
             instance = this;
         }
 
+        poolParent = new GameObject("PlayerPool");
+
         // Player 풀 초기화
         for (int i = 0; i < poolSize; i++)
         {
             GameObject playerObj = Instantiate(playerPrefab);
+            playerObj.transform.SetParent(poolParent.transform);
             playerObj.SetActive(false);
             playerPool.Enqueue(playerObj);
         }
@@ -46,6 +50,7 @@ public class ObjectPool : MonoBehaviour
     // Player 오브젝트 반환하기
     public void ReturnPlayerObject(GameObject obj)
     {
+        obj.transform.SetParent(poolParent.transform);
         obj.SetActive(false);
         playerPool.Enqueue(obj);
     }
