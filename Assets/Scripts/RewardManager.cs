@@ -57,23 +57,26 @@ public class RewardManager : MonoBehaviour
         for (int i = 0; i < pileOfCoinParent.transform.childCount; i++)
         {
             var coin = pileOfCoinParent.transform.GetChild(i);
-            coin.DOScale(1f, 0.3f).SetDelay(delay).SetEase(Ease.OutBack);
-            coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(557f, 905f), 1f).SetDelay(delay + 0.5f)
-                .OnStart(() =>
-                {
-                    if (!hasStartedCoroutine)
+            if (coin != null)
+            {
+                coin.DOScale(1f, 0.3f).SetDelay(delay).SetEase(Ease.OutBack);
+                coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(557f, 905f), 1f).SetDelay(delay + 0.5f)
+                    .OnStart(() =>
                     {
-                        hasStartedCoroutine = true;
-                        StartCoroutine(IncrementCoins(noCoin));
-                    }
-                });
+                        if (!hasStartedCoroutine)
+                        {
+                            hasStartedCoroutine = true;
+                            StartCoroutine(IncrementCoins(noCoin));
+                        }
+                    });
 
-            coin.DORotate(Vector3.zero, 0.5f).SetDelay(delay + 0.5f).SetEase(Ease.Flash);
+                coin.DORotate(Vector3.zero, 0.5f).SetDelay(delay + 0.5f).SetEase(Ease.Flash);
 
-            delay += 0.2f;
+                delay += 0.2f;
+            }
         }
-
     }
+
     private IEnumerator IncrementCoins(int noCoin)
     {
         int targetValue = currentCoinCount + noCoin;

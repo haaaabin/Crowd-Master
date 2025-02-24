@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 
     public int numberOfStickmans;
     private int numberOfEnemyStickmans;
-    [SerializeField] private TextMeshPro counterTxt;
+    public TextMeshPro counterTxt;
     [SerializeField] private GameObject stickMan;
     [SerializeField] private Transform road;
     [SerializeField] private Transform enemy;
@@ -60,6 +60,14 @@ public class PlayerManager : MonoBehaviour
         if (transform.childCount == 1 && isFinish)
         {
             GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (transform != null)
+        {
+            transform.DOKill();
         }
     }
 
@@ -196,6 +204,8 @@ public class PlayerManager : MonoBehaviour
     // 플레이어 중심으로 스틱맨을 원형으로 배열
     public void FormatStickMan()
     {
+        if (transform == null) return;
+
         for (int i = 1; i < transform.childCount; i++)
         {
             var x = distanceFactor * Mathf.Sqrt(i) * Mathf.Cos(i * radius);
@@ -263,7 +273,7 @@ public class PlayerManager : MonoBehaviour
         {
             isFinish = true;
             moveByTouch = false;
-            moveTheCamera = true;
+            // moveTheCamera = true;
 
             transform.GetChild(0).gameObject.SetActive(false);
             secondCam.SetActive(true);

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 using TMPro;
 using System.Collections;
-using System.Xml.Serialization;
 
 
 public class UIManager : MonoBehaviour
@@ -36,14 +35,17 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tapToPlayBtn.transform.DOScale(1.2f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+        if (handIcon != null)
+            handIcon.transform.DOMoveX(250f, 1f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutSine);
+
+        if (tapToPlayBtn != null)
+            tapToPlayBtn.transform.DOScale(1.2f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+
         tapToPlayBtn.onClick.AddListener(() =>
         {
             gameStartPanel.SetActive(false);
             GameManager.Instance().StartGame();
         });
-
-        handIcon.transform.DOMoveX(250f, 1f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public IEnumerator UpdateScore(int numStickmans, float curscore)
@@ -54,8 +56,7 @@ public class UIManager : MonoBehaviour
         score = numStickmans * curscore;
         int roundedScore = Mathf.RoundToInt(score);
 
-        // scoreText.text = roundedScore.ToString();
-        ShowResultPanel("성공 !" , roundedScore , "next", true);
+        ShowResultPanel("성공 !", roundedScore, "next", true);
         RewardManager.instance.RewardPileOfCoin(roundedScore);
     }
 

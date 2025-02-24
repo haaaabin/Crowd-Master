@@ -84,35 +84,36 @@ public class Tower : MonoBehaviour
             }
 
             var tower = new GameObject("Tower" + towerId);
-
-            tower.transform.parent = transform;
-            tower.transform.localPosition = new Vector3(0, 0, 0);
-
-            towerList.Add(tower);
-
-            var towerNewPos = Vector3.zero;
-            float tempTowerHumanCount = 0;
-
-            for (int i = 1; i < transform.childCount; i++)
+            if (tower != null)
             {
-                Transform child = transform.GetChild(i);
-                child.transform.parent = tower.transform;
-                child.transform.localPosition = new Vector3(tempTowerHumanCount * xGap, 0, 0);
-                towerNewPos += child.transform.position;
-                tempTowerHumanCount++;
-                i--;
+                tower.transform.parent = transform;
+                tower.transform.localPosition = new Vector3(0, 0, 0);
 
-                if (tempTowerHumanCount >= towerStickManCnt)
+                towerList.Add(tower);
+
+                var towerNewPos = Vector3.zero;
+                float tempTowerHumanCount = 0;
+
+                for (int i = 1; i < transform.childCount; i++)
                 {
-                    break;
+                    Transform child = transform.GetChild(i);
+                    child.transform.parent = tower.transform;
+                    child.transform.localPosition = new Vector3(tempTowerHumanCount * xGap, 0, 0);
+                    towerNewPos += child.transform.position;
+                    tempTowerHumanCount++;
+                    i--;
+
+                    if (tempTowerHumanCount >= towerStickManCnt)
+                    {
+                        break;
+                    }
                 }
+
+                tower.transform.position = new Vector3(-towerNewPos.x / towerStickManCnt, tower.transform.position.y - yOffset, tower.transform.position.z);
+
+                towerId++;
+                yield return new WaitForSecondsRealtime(0.2f);
             }
-
-            tower.transform.position = new Vector3(-towerNewPos.x / towerStickManCnt, tower.transform.position.y - yOffset, tower.transform.position.z);
-
-            towerId++;
-            yield return new WaitForSecondsRealtime(0.2f);
-
         }
 
         yield return new WaitForSecondsRealtime(1f);

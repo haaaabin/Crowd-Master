@@ -52,7 +52,9 @@ public class StickManManager : MonoBehaviour
                 break;
 
             case "ramp":
-                transform.DOJump(transform.position, 3f, 1, 1).SetEase(Ease.Flash).OnComplete(() => StartCoroutine(DelayedFormatStickMan(0.8f)));
+
+                if (transform != null)
+                    transform.DOJump(transform.position, 3f, 1, 1).SetEase(Ease.Flash).OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1.3f)));
                 break;
 
             case "stair":
