@@ -58,7 +58,7 @@ public class RewardManager : MonoBehaviour
         {
             var coin = pileOfCoinParent.transform.GetChild(i);
             coin.DOScale(1f, 0.3f).SetDelay(delay).SetEase(Ease.OutBack);
-            coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(551.7f, 900f), 1f).SetDelay(delay + 0.5f)
+            coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(557f, 905f), 1f).SetDelay(delay + 0.5f)
                 .OnStart(() =>
                 {
                     if (!hasStartedCoroutine)
