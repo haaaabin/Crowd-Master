@@ -10,7 +10,7 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counter;
     private Vector3[] initialPos;
     private Quaternion[] initialRotation;
-    private int coinNo = 12;
+    private int coinNo = 10;
     private int currentCoinCount;
 
     void Awake()
