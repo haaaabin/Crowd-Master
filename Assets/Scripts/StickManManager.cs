@@ -18,7 +18,29 @@ public class StickManManager : MonoBehaviour
         coll = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        anim.SetBool("run", true);
+        UpdateAnimation(GameManager.Instance().gameState);
+
+        GameManager.Instance().OnGameStateChanged += UpdateAnimation;
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.Instance() != null)
+        {
+            GameManager.Instance().OnGameStateChanged -= UpdateAnimation;
+        }
+    }
+
+    private void UpdateAnimation(GameManager.GameState newState)
+    {
+        if (newState == GameManager.GameState.Playing)
+        {
+            anim.SetBool("run", true);
+        }
+        else
+        {
+            anim.SetBool("run", false);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -49,7 +71,6 @@ public class StickManManager : MonoBehaviour
                     StartCoroutine(ChangeStairRender(other));
                     StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
                 }
-
                 break;
         }
     }
@@ -84,7 +105,5 @@ public class StickManManager : MonoBehaviour
         {
             return 0f;
         }
-
     }
-
 }
