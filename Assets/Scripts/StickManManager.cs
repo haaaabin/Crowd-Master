@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class StickManManager : MonoBehaviour
 {
@@ -72,6 +71,24 @@ public class StickManManager : MonoBehaviour
                 {
                     StartCoroutine(ChangeStairRender(other));
                     StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
+                    GameManager.Instance().ChangeState(GameManager.GameState.GameClear);
+                }
+                break;
+
+            case "prop":
+                if (PlayerManager.instance.numberOfStickmans > 0)
+                {
+                    ObjectPool.instance.ReturnPlayerObject(transform.gameObject); // 객체 풀로 반환
+                    Instantiate(blood, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+
+                    PlayerManager.instance.numberOfStickmans--;
+                    PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
+
+                    if (PlayerManager.instance.numberOfStickmans == 0)
+                    {
+                        PlayerManager.instance.GameOver();
+
+                    }
                 }
                 break;
         }

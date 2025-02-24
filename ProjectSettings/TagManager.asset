@@ -9,6 +9,7 @@ TagManager:
   - red
   - ramp
   - stair
+  - prop
   layers:
   - Default
   - TransparentFX

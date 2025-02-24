@@ -4,7 +4,6 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
@@ -179,13 +178,17 @@ public class PlayerManager : MonoBehaviour
         // 모든 스틱맨이 제거되었을 때
         if (transform.childCount == 1)
         {
-            GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
-            enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
-            gameObject.SetActive(false);
-            UIManager.instance.ShowResultPanel("실패 !", 0, "다시하기", false);
+            GameOver();
         }
     }
 
+    public void GameOver()
+    {
+        GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
+        enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
+        gameObject.SetActive(false);
+        UIManager.instance.ShowResultPanel("실패 !", 0, "다시하기", false);
+    }
 
     private void EndAttack()
     {
