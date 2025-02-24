@@ -13,11 +13,14 @@ public class UIManager : MonoBehaviour
     public Button tapToPlayBtn;
     public GameObject gameStartPanel;
     public Image handIcon;
+    public Button nextBtn;
 
     public GameObject panel;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI feverText;
     private float score = 0f;
+
+    private static bool isRestarted = false;
 
 
     void Awake()
@@ -26,6 +29,8 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        gameStartPanel.SetActive(!isRestarted);
     }
 
     // Start is called before the first frame update
@@ -35,30 +40,47 @@ public class UIManager : MonoBehaviour
         tapToPlayBtn.onClick.AddListener(() =>
         {
             gameStartPanel.SetActive(false);
-            PlayerManager.instance.gameState = true;
+            GameManager.Instance().StartGame();
         });
+
         handIcon.transform.DOMoveX(250f, 1f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutSine);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public IEnumerator UpdateScore(int numStickmans, float curscore)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         panel.SetActive(true);
+        score = numStickmans * curscore;
+        int roundedScore = Mathf.RoundToInt(score);
 
-        score = numStickmans;
-        score *= curscore;
-        score *= 10;
-        scoreText.text = score.ToString();
-        feverText.text = $"Great!!\n <size=80>X    {numStickmans}\n     X{curscore:F1}</size=80>";
+        // scoreText.text = roundedScore.ToString();
+        ShowResultPanel("성공 !" , roundedScore , "next", true);
+        RewardManager.instance.RewardPileOfCoin(roundedScore);
+    }
 
-        RewardManager.instance.RewardPileOfCoin((int)score);
+    public void ShowResultPanel(string resultText, int resultScore, string resultBtnText, bool isSuccess)
+    {
+        panel.SetActive(true);
+
+        feverText.text = resultText;
+        scoreText.text = $"<size=50>획득</size=50>\n + {resultScore}";
+        nextBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = resultBtnText;
+
+        nextBtn.onClick.RemoveAllListeners();
+
+        if (!isSuccess)
+        {
+            nextBtn.onClick.AddListener(() =>
+            {
+                isRestarted = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                GameManager.Instance().ChangeState(GameManager.GameState.Playing);
+            });
+        }
+        else
+        {
+            Debug.Log("next level");
+        }
     }
 }
