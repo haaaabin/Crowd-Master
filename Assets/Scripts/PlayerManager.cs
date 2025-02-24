@@ -19,7 +19,6 @@ public class PlayerManager : MonoBehaviour
     [Range(0f, 1f)][SerializeField] private float radius;           // 원형 배열 각도
 
     public bool moveByTouch;
-    public bool gameState;
     private bool isAttack;
 
     private Vector3 mouseStartPos;
@@ -27,11 +26,9 @@ public class PlayerManager : MonoBehaviour
     public float playerSpeed;
     public float roadSpeed;
 
-    public GameObject gameOverPanel;
     public GameObject secondCam;
     [HideInInspector] public bool isFinish;
     [HideInInspector] public bool moveTheCamera;
-    [SerializeField] private GameObject counterLabel;
 
     void Awake()
     {
@@ -39,24 +36,15 @@ public class PlayerManager : MonoBehaviour
         {
             instance = this;
         }
+
         DOTween.SetTweensCapacity(3125, 100); // 트윈 3125개, 시퀀스 100개로 설정
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+
         UpdateCounterText();
     }
 
-    private void UpdateCounterText()
-    {
-        numberOfStickmans = transform.childCount - 1;
-        counterTxt.text = numberOfStickmans.ToString();
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (!gameState) return;
+        if (GameManager.Instance().gameState != GameManager.GameState.Playing) return;
 
         road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
 
@@ -70,7 +58,15 @@ public class PlayerManager : MonoBehaviour
         HandleCameraMovement();
 
         if (transform.childCount == 1 && isFinish)
-            gameState = false;
+        {
+            GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
+        }
+    }
+
+    private void UpdateCounterText()
+    {
+        numberOfStickmans = transform.childCount - 1;
+        counterTxt.text = numberOfStickmans.ToString();
     }
 
     private void HandleCameraMovement()
@@ -97,7 +93,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (isFinish) return;
 
-        if (Input.GetMouseButtonDown(0) && gameState)
+        if (Input.GetMouseButtonDown(0) && GameManager.Instance().gameState == GameManager.GameState.Playing)
         {
             moveByTouch = true;
             var plane = new Plane(Vector3.up, 0f);
@@ -173,13 +169,15 @@ public class PlayerManager : MonoBehaviour
         }
 
         // 모든 스틱맨이 제거되었을 때
-        if (transform.childCount - 1 <= 0)
+        if (transform.childCount == 1)
         {
+            GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
             gameObject.SetActive(false);
-            Invoke("GameOverPanel", 0.5f);
+            UIManager.instance.ShowResultPanel("실패 !", 0, "다시하기", false);
         }
     }
+
 
     private void EndAttack()
     {
@@ -193,11 +191,6 @@ public class PlayerManager : MonoBehaviour
         {
             transform.GetChild(i).rotation = Quaternion.identity;
         }
-    }
-
-    private void GameOverPanel()
-    {
-        gameOverPanel.SetActive(true);
     }
 
     // 플레이어 중심으로 스틱맨을 원형으로 배열
@@ -235,6 +228,8 @@ public class PlayerManager : MonoBehaviour
         FormatStickMan();
     }
 
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("gate"))
@@ -256,9 +251,9 @@ public class PlayerManager : MonoBehaviour
 
         if (other.CompareTag("enemy"))
         {
-            enemy = other.transform;
+            Debug.Log("attack");
             isAttack = true;
-
+            enemy = other.transform;
             roadSpeed = 2f;
             other.transform.GetChild(1).GetComponent<EnemyManager>().Attacking(transform);
             StartCoroutine(UpdateStickManNumbers());
