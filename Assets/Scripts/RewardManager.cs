@@ -10,7 +10,7 @@ public class RewardManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI counter;
     private Vector3[] initialPos;
     private Quaternion[] initialRotation;
-    private int coinNo = 10;
+    private int coinNo = 13;
     private int currentCoinCount;
 
     void Awake()
@@ -29,10 +29,14 @@ public class RewardManager : MonoBehaviour
         initialPos = new Vector3[coinNo];
         initialRotation = new Quaternion[coinNo];
 
-        for (int i = 0; i < pileOfCoinParent.transform.childCount; i++)
+
+        if (pileOfCoinParent != null)
         {
-            initialPos[i] = pileOfCoinParent.transform.GetChild(i).position;
-            initialRotation[i] = pileOfCoinParent.transform.GetChild(i).rotation;
+            for (int i = 0; i < pileOfCoinParent.transform.childCount; i++)
+            {
+                initialPos[i] = pileOfCoinParent.transform.GetChild(i).position;
+                initialRotation[i] = pileOfCoinParent.transform.GetChild(i).rotation;
+            }
         }
     }
 
@@ -59,8 +63,8 @@ public class RewardManager : MonoBehaviour
             var coin = pileOfCoinParent.transform.GetChild(i);
             if (coin != null)
             {
-                coin.DOScale(1f, 0.3f).SetDelay(delay).SetEase(Ease.OutBack);
-                coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(557f, 905f), 1f).SetDelay(delay + 0.5f)
+                coin.DOScale(1f, 0.2f).SetDelay(delay).SetEase(Ease.OutBack);
+                coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(-470f, 844), 1f).SetDelay(delay + 0.2f)
                     .OnStart(() =>
                     {
                         if (!hasStartedCoroutine)
@@ -70,9 +74,9 @@ public class RewardManager : MonoBehaviour
                         }
                     });
 
-                coin.DORotate(Vector3.zero, 0.5f).SetDelay(delay + 0.5f).SetEase(Ease.Flash);
+                coin.DORotate(Vector3.zero, 0.3f).SetDelay(delay + 0.4f).SetEase(Ease.Flash);
 
-                delay += 0.2f;
+                delay += 0.1f;
             }
         }
     }
@@ -86,7 +90,7 @@ public class RewardManager : MonoBehaviour
             currentCoinCount = i;
             counter.text = currentCoinCount.ToString();
             PlayerPrefs.SetInt("CountCoin", currentCoinCount);
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.04f);
         }
         PlayerPrefs.Save();
     }
