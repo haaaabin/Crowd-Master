@@ -17,29 +17,23 @@ public class StickManManager : MonoBehaviour
         coll = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        UpdateAnimation(GameManager.Instance().gameState);
-
-        GameManager.Instance().OnGameStateChanged += UpdateAnimation;
+        GameManager.setMenuDelegate += OnMenuAnimState;
+        GameManager.setGameDelegate += OnGameAnimState;
     }
 
     void OnDestroy()
     {
-        if (GameManager.Instance() != null)
-        {
-            GameManager.Instance().OnGameStateChanged -= UpdateAnimation;
-        }
+        GameManager.setMenuDelegate -= OnMenuAnimState;
+        GameManager.setGameDelegate -= OnGameAnimState;
     }
 
-    private void UpdateAnimation(GameManager.GameState newState)
+    private void OnMenuAnimState()
     {
-        if (newState == GameManager.GameState.Playing)
-        {
-            anim.SetBool("run", true);
-        }
-        else
-        {
-            anim.SetBool("run", false);
-        }
+        anim.SetBool("run", false);
+    }
+    private void OnGameAnimState()
+    {
+        anim.SetBool("run", true);
     }
 
     void OnTriggerEnter(Collider other)
@@ -52,7 +46,7 @@ public class StickManManager : MonoBehaviour
 
             case "ramp":
 
-                if (transform != null)
+                if (transform != null && transform.gameObject.activeSelf)
                     transform.DOJump(transform.position, 3f, 1, 1).SetEase(Ease.Flash).OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1.3f)));
                 break;
 
@@ -71,8 +65,8 @@ public class StickManManager : MonoBehaviour
                 {
                     StartCoroutine(ChangeStairRender(other));
                     StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
-                    GameManager.Instance().ChangeState(GameManager.GameState.GameClear);
                 }
+
                 break;
 
             case "prop":
@@ -83,12 +77,6 @@ public class StickManManager : MonoBehaviour
 
                     PlayerManager.instance.numberOfStickmans--;
                     PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
-
-                    if (PlayerManager.instance.numberOfStickmans == 0)
-                    {
-                        PlayerManager.instance.GameOver();
-
-                    }
                 }
                 break;
         }
@@ -104,6 +92,9 @@ public class StickManManager : MonoBehaviour
             stairRender.material.DOColor(new Color(0.4f, 0.98f, 0.65f), 0.5f).SetLoops(1000, LoopType.Yoyo)
                 .SetEase(Ease.Flash);
         }
+        yield return new WaitForSeconds(0.01f);
+        GameManager.Instance().ChangeState(GameManager.GameState.LEVELCOMPLETE);
+
     }
 
     IEnumerator DelayedFormatStickMan(float delay)

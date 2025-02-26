@@ -10,78 +10,121 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public Button tapToPlayBtn;
-    public GameObject gameStartPanel;
-    public Image handIcon;
+    public GameObject menuPanel;
+    public GameObject gamePanel;
+    public GameObject levelCompletePanel;
+    public GameObject gameOverPanel;
+    public GameObject settingsPanel;
+
     public Button nextBtn;
+    public Button replyBtn;
+    public Button settingBtn;
 
-    public GameObject panel;
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI feverText;
+    public TextMeshProUGUI coinText;
+
     private float score = 0f;
-
-    private static bool isRestarted = false;
-
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
-
-        gameStartPanel.SetActive(!isRestarted);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        if (handIcon != null)
-            handIcon.transform.DOMoveX(250f, 1f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        InitalizeUI();
+        RegisterDelegate();
+    }
 
+    private void InitalizeUI()
+    {
         if (tapToPlayBtn != null)
-            tapToPlayBtn.transform.DOScale(1.2f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-
-        tapToPlayBtn.onClick.AddListener(() =>
         {
-            gameStartPanel.SetActive(false);
-            GameManager.Instance().StartGame();
-        });
+            tapToPlayBtn.transform.DOScale(1.15f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+            tapToPlayBtn.onClick.AddListener(() =>
+            {
+                GameManager.Instance().ChangeState(GameManager.GameState.GAME);
+            });
+        }
+
+        coinText.text = PlayerPrefs.GetInt("CountCoin").ToString();
+    }
+
+    private void RegisterDelegate()
+    {
+        GameManager.setMenuDelegate += OnMenuUI;
+        GameManager.setGameDelegate += OnGameUI;
+        GameManager.setGameOverDelegate += OnGameOverUI;
+        GameManager.setLevelCompleteDelegate += OnLevelCompleteUI;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.setMenuDelegate -= OnMenuUI;
+        GameManager.setGameDelegate -= OnGameUI;
+        GameManager.setGameOverDelegate -= OnGameOverUI;
+        GameManager.setLevelCompleteDelegate -= OnLevelCompleteUI;
     }
 
     public IEnumerator UpdateScore(int numStickmans, float curscore)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
 
-        panel.SetActive(true);
+        levelCompletePanel.SetActive(true);
+
         score = numStickmans * curscore;
         int roundedScore = Mathf.RoundToInt(score);
 
-        ShowResultPanel("성공 !", roundedScore, "next", true);
+        scoreText.text = $"+ {roundedScore}";
         RewardManager.instance.RewardPileOfCoin(roundedScore);
     }
 
-    public void ShowResultPanel(string resultText, int resultScore, string resultBtnText, bool isSuccess)
+    private void OnMenuUI()
     {
-        panel.SetActive(true);
+        menuPanel.SetActive(true);
+        gamePanel.SetActive(false);
+        levelCompletePanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+    }
 
-        feverText.text = resultText;
-        scoreText.text = $"<size=50>획득</size=50>\n + {resultScore}";
-        nextBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = resultBtnText;
+    private void OnGameUI()
+    {
+        menuPanel.SetActive(false);
+        gamePanel.SetActive(true);
+    }
+
+    public void OnLevelCompleteUI()
+    {
+        gamePanel.SetActive(false);
 
         nextBtn.onClick.RemoveAllListeners();
-
-        if (!isSuccess)
+        nextBtn.onClick.AddListener(() =>
         {
-            nextBtn.onClick.AddListener(() =>
-            {
-                isRestarted = true;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                GameManager.Instance().ChangeState(GameManager.GameState.Playing);
-            });
-        }
-        else
-        {
-            Debug.Log("next level");
-        }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            GameManager.Instance().ChangeState(GameManager.GameState.MENU);
+        });
     }
+
+    private void OnGameOverUI()
+    {
+        gamePanel.SetActive(false);
+        gameOverPanel.SetActive(true);
+
+        replyBtn.onClick.RemoveAllListeners();
+        replyBtn.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            GameManager.Instance().ChangeState(GameManager.GameState.MENU);
+        });
+    }
+
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using Cinemachine;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -26,7 +27,7 @@ public class PlayerManager : MonoBehaviour
     public float roadSpeed;
 
     public GameObject secondCam;
-    [HideInInspector] public bool isFinish;
+    public bool isFinish;
     [HideInInspector] public bool moveTheCamera;
 
     void Awake()
@@ -34,6 +35,10 @@ public class PlayerManager : MonoBehaviour
         if (!instance)
         {
             instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         DOTween.SetTweensCapacity(3125, 100); // 트윈 3125개, 시퀀스 100개로 설정
@@ -43,7 +48,7 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance().gameState != GameManager.GameState.Playing) return;
+        if (GameManager.Instance().gameState != GameManager.GameState.GAME) return;
 
         road.Translate(road.forward * -1 * Time.deltaTime * roadSpeed);
 
@@ -56,10 +61,11 @@ public class PlayerManager : MonoBehaviour
 
         HandleCameraMovement();
 
-        if (transform.childCount == 1 && isFinish)
+        if (numberOfStickmans == 0)
         {
-            GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
+            GameManager.Instance().ChangeState(GameManager.GameState.GAMEOVER);
         }
+
     }
 
     void OnDestroy()
@@ -100,7 +106,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (isFinish) return;
 
-        if (Input.GetMouseButtonDown(0) && GameManager.Instance().gameState == GameManager.GameState.Playing)
+        if (Input.GetMouseButtonDown(0) && GameManager.Instance().gameState == GameManager.GameState.GAME)
         {
             moveByTouch = true;
             var plane = new Plane(Vector3.up, 0f);
@@ -162,7 +168,7 @@ public class PlayerManager : MonoBehaviour
                 var distance = enemy.GetChild(1).GetChild(0).position - stickman.position;
 
                 // 스틱맨이 적에게 가까워지면 Lerp로 이동
-                if (distance.magnitude < 4f)
+                if (distance.magnitude < 6f)
                 {
                     stickman.position = Vector3.Lerp(stickman.position,
                         new Vector3(enemy.GetChild(1).GetChild(0).position.x, stickman.position.y,
@@ -184,10 +190,10 @@ public class PlayerManager : MonoBehaviour
 
     public void GameOver()
     {
-        GameManager.Instance().ChangeState(GameManager.GameState.GameOver);
-        enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
+        GameManager.Instance().ChangeState(GameManager.GameState.GAMEOVER);
+        if (enemy != null)
+            enemy.transform.GetChild(1).GetComponent<EnemyManager>().StopAttacking();
         gameObject.SetActive(false);
-        UIManager.instance.ShowResultPanel("실패 !", 0, "다시하기", false);
     }
 
     private void EndAttack()
@@ -264,7 +270,6 @@ public class PlayerManager : MonoBehaviour
 
         if (other.CompareTag("enemy"))
         {
-            Debug.Log("attack");
             isAttack = true;
             enemy = other.transform;
             roadSpeed = 2f;
@@ -276,7 +281,7 @@ public class PlayerManager : MonoBehaviour
         {
             isFinish = true;
             moveByTouch = false;
-            // moveTheCamera = true;
+            moveTheCamera = true;
 
             transform.GetChild(0).gameObject.SetActive(false);
             secondCam.SetActive(true);
@@ -318,4 +323,5 @@ public class PlayerManager : MonoBehaviour
         }
         FormatStickMan();
     }
+
 }
