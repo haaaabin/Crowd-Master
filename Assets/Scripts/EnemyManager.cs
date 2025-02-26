@@ -44,7 +44,7 @@ public class EnemyManager : MonoBehaviour
             {
                 var distance = enemy.GetChild(1).position - transform.GetChild(i).position;
 
-                if (distance.magnitude < 4f)
+                if (distance.magnitude < 6f)
                 {
                     transform.GetChild(i).position = Vector3.Lerp(transform.GetChild(i).position, enemy.GetChild(1).position, Time.deltaTime);
                 }
