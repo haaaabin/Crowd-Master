@@ -53,12 +53,23 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (levelsParent == null)
+        {
+            levelsParent = GameObject.Find("----LEVEL----");
+        }
+
+        ChangeLevel();
     }
 
     public void ChangeState(GameState newState)
@@ -88,6 +99,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetNextLevel()
+    {
+        int currentlevel = PlayerPrefs.GetInt("Level");
+
+        // 다음 레벨로 진행 (마지막 레벨이면 더 이상 증가 X)
+        if (currentlevel <= 3)
+        {
+            currentlevel++;
+            PlayerPrefs.SetInt("Level", currentlevel);
         }
+        else
+        {
+            Debug.Log("마지막 레벨입니다.");
+        }
+    }
+
+    public void ChangeLevel()
+    {
+        int childIndex = PlayerPrefs.GetInt("Level");
+
+        if (childIndex > 3)
+        {
+            Debug.Log("end");
+            return;
+        }
+
+        // 모든 레벨 비활성화
+        foreach (Transform child in levelsParent.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+        // 현재 레벨만 활성화
+        Transform levelTransform = levelsParent.transform.GetChild(childIndex);
+        currentLevel = levelTransform.gameObject;
+        currentLevel.SetActive(true);
+
+        Debug.Log("Current Level: " + currentLevel.name); // 현재 활성화된 레벨 출력
     }
 }

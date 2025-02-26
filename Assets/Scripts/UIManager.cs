@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
+    public Text levelText;
 
     private float score = 0f;
 
@@ -100,6 +101,7 @@ public class UIManager : MonoBehaviour
     {
         menuPanel.SetActive(false);
         gamePanel.SetActive(true);
+        levelText.text = "Level " + (PlayerPrefs.GetInt("Level") + 1).ToString();
     }
 
     public void OnLevelCompleteUI()
@@ -111,6 +113,7 @@ public class UIManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             GameManager.Instance().ChangeState(GameManager.GameState.MENU);
+            GameManager.Instance().SetNextLevel();
         });
     }
 

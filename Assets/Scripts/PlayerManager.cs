@@ -46,6 +46,11 @@ public class PlayerManager : MonoBehaviour
         UpdateCounterText();
     }
 
+    void Start()
+    {
+        road = GameManager.Instance().currentLevel.transform;
+    }
+
     void Update()
     {
         if (GameManager.Instance().gameState != GameManager.GameState.GAME) return;
