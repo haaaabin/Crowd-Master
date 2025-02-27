@@ -10,6 +10,8 @@ TagManager:
   - ramp
   - stair
   - prop
+  - Ground
+  - Prop
   layers:
   - Default
   - TransparentFX
