@@ -11,8 +11,8 @@ public class PlayerManager : MonoBehaviour
     public int numberOfStickmans;
     private int numberOfEnemyStickmans;
     public TextMeshPro counterTxt;
+    public Transform road;
     [SerializeField] private GameObject stickMan;
-    [SerializeField] private Transform road;
     [SerializeField] private Transform enemy;
     [Range(0f, 1f)][SerializeField] private float distanceFactor;   // 원형 배열 간격
     [Range(0f, 1f)][SerializeField] private float radius;           // 원형 배열 각도

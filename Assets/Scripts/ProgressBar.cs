@@ -3,14 +3,24 @@ using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
+    public static ProgressBar instance;
     public Transform player;
     public Transform finishLine;
     public Slider progressBar;
 
     private float startDistance;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
+        player = PlayerManager.instance.transform;
         finishLine = GameManager.Instance().currentLevel.transform.Find("FinishLine").gameObject.transform;
         startDistance = Mathf.Abs(player.position.z - finishLine.position.z);
     }

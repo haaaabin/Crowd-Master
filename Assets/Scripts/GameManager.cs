@@ -70,6 +70,17 @@ public class GameManager : MonoBehaviour
         }
 
         ChangeLevel();
+        
+        if (ProgressBar.instance.finishLine == null || ProgressBar.instance.player == null)
+        {
+            ProgressBar.instance.finishLine = currentLevel.transform.Find("FinishLine").gameObject.transform;
+            ProgressBar.instance.player = PlayerManager.instance.transform;
+        }
+
+        if (PlayerManager.instance.road == null)
+        {
+            PlayerManager.instance.road = currentLevel.transform;
+        }
     }
 
     public void ChangeState(GameState newState)
