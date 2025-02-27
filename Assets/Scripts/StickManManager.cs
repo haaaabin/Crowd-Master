@@ -61,7 +61,7 @@ public class StickManManager : MonoBehaviour
                 if (!PlayerManager.instance.moveTheCamera)
                     PlayerManager.instance.moveTheCamera = true;
 
-                if (PlayerManager.instance.transform.childCount == 2)
+                if (PlayerManager.instance.transform.childCount == 0)
                 {
                     StartCoroutine(ChangeStairRender(other));
                     StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
@@ -69,7 +69,7 @@ public class StickManManager : MonoBehaviour
 
                 break;
 
-            case "prop":
+            case "Prop":
                 if (PlayerManager.instance.numberOfStickmans > 0)
                 {
                     ObjectPool.instance.ReturnPlayerObject(transform.gameObject); // 객체 풀로 반환

@@ -2,7 +2,6 @@ using System.Collections;
 using Cinemachine;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -83,13 +82,13 @@ public class PlayerManager : MonoBehaviour
 
     private void UpdateCounterText()
     {
-        numberOfStickmans = transform.childCount - 1;
+        numberOfStickmans = transform.childCount;
         counterTxt.text = numberOfStickmans.ToString();
     }
 
     private void HandleCameraMovement()
     {
-        if (!moveTheCamera || transform.childCount <= 1) return;
+        if (!moveTheCamera || transform.childCount <= 0) return;
 
         GameObject tower0 = GameObject.Find("Character_Blue");
 
@@ -159,7 +158,7 @@ public class PlayerManager : MonoBehaviour
         var enemyDirection = new Vector3(enemy.position.x, transform.position.y, enemy.position.z) - transform.position;
 
         // 각 스틱맨을 적을 향해 부드럽게 회전시킨다.
-        for (int i = 1; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).rotation =
                     Quaternion.Slerp(transform.GetChild(i).rotation, Quaternion.LookRotation(enemyDirection, Vector3.up), Time.deltaTime * 1.5f);
@@ -167,7 +166,7 @@ public class PlayerManager : MonoBehaviour
 
         if (enemy.GetChild(1).childCount > 0)
         {
-            for (int i = 1; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
                 var stickman = transform.GetChild(i);
                 var distance = enemy.GetChild(1).GetChild(0).position - stickman.position;
@@ -187,7 +186,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         // 모든 스틱맨이 제거되었을 때
-        if (transform.childCount == 1)
+        if (transform.childCount == 0)
         {
             GameOver();
         }
@@ -209,7 +208,7 @@ public class PlayerManager : MonoBehaviour
 
         FormatStickMan();
 
-        for (int i = 1; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).rotation = Quaternion.identity;
         }
@@ -220,7 +219,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (transform == null) return;
 
-        for (int i = 1; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             var x = distanceFactor * Mathf.Sqrt(i) * Mathf.Cos(i * radius);
             var z = distanceFactor * Mathf.Sqrt(i) * Mathf.Sin(i * radius);
@@ -288,10 +287,10 @@ public class PlayerManager : MonoBehaviour
             moveByTouch = false;
             moveTheCamera = true;
 
-            transform.GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
             secondCam.SetActive(true);
-            Tower.instance.CreateTower(transform.childCount - 1);
-            numberOfStickmans = transform.childCount - 1;
+            Tower.instance.CreateTower(transform.childCount);
+            numberOfStickmans = transform.childCount;
         }
     }
 
@@ -312,7 +311,7 @@ public class PlayerManager : MonoBehaviour
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().counterTxt.text = numberOfEnemyStickmans.ToString();
 
             // 마지막 스틱맨을 꺼내서 객체 풀로 반환
-            Transform stickman = transform.GetChild(numberOfStickmans);
+            Transform stickman = transform.GetChild(numberOfStickmans - 1);
             ObjectPool.instance.ReturnPlayerObject(stickman.gameObject); // 객체 풀로 반환
             numberOfStickmans--;
             counterTxt.text = numberOfStickmans.ToString();
@@ -323,7 +322,7 @@ public class PlayerManager : MonoBehaviour
         // 적 스틱맨이 모두 제거되었을 때, 스틱맨 회전 리셋
         if (numberOfEnemyStickmans == 0)
         {
-            for (int i = 1; i < transform.childCount; i++)
+            for (int i = 0; i < transform.childCount; i++)
                 transform.GetChild(i).rotation = Quaternion.identity;
         }
         FormatStickMan();

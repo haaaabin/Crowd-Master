@@ -94,7 +94,7 @@ public class Tower : MonoBehaviour
                 var towerNewPos = Vector3.zero;
                 float tempTowerHumanCount = 0;
 
-                for (int i = 1; i < transform.childCount; i++)
+                for (int i = 0; i < transform.childCount; i++)
                 {
                     Transform child = transform.GetChild(i);
                     child.transform.parent = tower.transform;
