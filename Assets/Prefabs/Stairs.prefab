@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 876157292565328055}
   - component: {fileID: 3985250747997980465}
   - component: {fileID: 1028430810701385192}
+  - component: {fileID: 8150699500121363367}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: stair
@@ -106,6 +107,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8150699500121363367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104580351257849542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &454815380704230812
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +302,7 @@ GameObject:
   - component: {fileID: 7528321014990463474}
   - component: {fileID: 4806151951410983637}
   - component: {fileID: 9221156151977856086}
+  - component: {fileID: 5456393105920457517}
   m_Layer: 0
   m_Name: Cube (16)
   m_TagString: stair
@@ -383,6 +397,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5456393105920457517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579514148026473963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &672544041863182453
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +763,7 @@ GameObject:
   - component: {fileID: 4854929583173957560}
   - component: {fileID: 481207091835126890}
   - component: {fileID: 3385766435284466034}
+  - component: {fileID: 3952197875258726782}
   m_Layer: 0
   m_Name: Cube (11)
   m_TagString: stair
@@ -831,6 +858,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3952197875258726782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851767341145831599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &900939550251803046
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +882,7 @@ GameObject:
   - component: {fileID: 8205329128186328594}
   - component: {fileID: 4450288373776632083}
   - component: {fileID: 841227492140585523}
+  - component: {fileID: 7323068395638171250}
   m_Layer: 0
   m_Name: Cube (14)
   m_TagString: stair
@@ -937,6 +977,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7323068395638171250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900939550251803046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &911973389322358599
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +998,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099439505495455545}
+  - component: {fileID: 3947090703480452805}
+  - component: {fileID: 8453072073263157502}
   m_Layer: 0
   m_Name: Stairs
   m_TagString: Untagged
@@ -993,6 +1047,130 @@ Transform:
   - {fileID: 8302786364987288754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3947090703480452805
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911973389322358599}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &8453072073263157502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911973389322358599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f7b8bc0326a4e4a8b6e167d8be28ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  notes:
+  - {fileID: 8300000, guid: b20fcba843d8fbb419e7dd8b799bafe1, type: 3}
+  - {fileID: 8300000, guid: 3d2400de357ae97418a02b006327bbfd, type: 3}
+  - {fileID: 8300000, guid: 66e33c92fa3120543b44c1cea4573957, type: 3}
+  - {fileID: 8300000, guid: 3af1e695754a2b842b3c7f40aee48023, type: 3}
+  - {fileID: 8300000, guid: 4da04240b0f9f62498883bec4e92ea4d, type: 3}
+  - {fileID: 8300000, guid: 33cccc86328c40d46875bcfb2743bf5f, type: 3}
+  - {fileID: 8300000, guid: 8970620424602af48966843802ce2d49, type: 3}
+  - {fileID: 8300000, guid: 3cba3077cb10d4f4fa0f01a4f0cc1d77, type: 3}
+  - {fileID: 8300000, guid: dccf15efa44aec6458d019766240d4bf, type: 3}
+  - {fileID: 8300000, guid: 694671f1c37e0274b90a18f4560f2c3b, type: 3}
+  - {fileID: 8300000, guid: 32da770cb3938314d902eb83fc9fe605, type: 3}
+  - {fileID: 8300000, guid: de47ff950e6168046bf56e9175c48948, type: 3}
+  - {fileID: 8300000, guid: 5e7366e80fe84cd4bbb25cdbf63f0c68, type: 3}
+  - {fileID: 8300000, guid: 8c51093feaedaaf4ea151bc9d182d7e9, type: 3}
 --- !u!1 &1091257745727420964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,6 +1696,7 @@ GameObject:
   - component: {fileID: 5524903890158366007}
   - component: {fileID: 8844641003311462422}
   - component: {fileID: 2237886762144333156}
+  - component: {fileID: 5722294412987738459}
   m_Layer: 0
   m_Name: Cube (19)
   m_TagString: stair
@@ -1612,6 +1791,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5722294412987738459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696997001167865231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1889526994552567753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1815,7 @@ GameObject:
   - component: {fileID: 1257363576449015578}
   - component: {fileID: 675439389355060738}
   - component: {fileID: 5496278477325944954}
+  - component: {fileID: 1934256145606772248}
   m_Layer: 0
   m_Name: Cube (23)
   m_TagString: stair
@@ -1718,6 +1910,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1934256145606772248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889526994552567753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2021778226146643022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,6 +2105,7 @@ GameObject:
   - component: {fileID: 1242454034978363722}
   - component: {fileID: 3564799578934777210}
   - component: {fileID: 1453530632276220206}
+  - component: {fileID: 6586488161258667588}
   m_Layer: 0
   m_Name: Cube (18)
   m_TagString: stair
@@ -1995,6 +2200,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6586488161258667588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2495590506384002894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2708126987397362879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,6 +2224,7 @@ GameObject:
   - component: {fileID: 1235068486797759657}
   - component: {fileID: 8304761360416588868}
   - component: {fileID: 9180746522848770634}
+  - component: {fileID: 2762658596861843003}
   m_Layer: 0
   m_Name: Cube (21)
   m_TagString: stair
@@ -2101,6 +2319,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2762658596861843003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708126987397362879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3758511373543337249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,6 +2514,7 @@ GameObject:
   - component: {fileID: 18579779694431603}
   - component: {fileID: 9116910948785948915}
   - component: {fileID: 5152790459822650505}
+  - component: {fileID: 4166031779369048760}
   m_Layer: 0
   m_Name: Cube (9)
   m_TagString: stair
@@ -2378,6 +2609,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4166031779369048760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177760866290299953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4385897217670698784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,6 +2633,7 @@ GameObject:
   - component: {fileID: 8956464869175329318}
   - component: {fileID: 3246258799246238649}
   - component: {fileID: 1183801982224233144}
+  - component: {fileID: 164459475295226906}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: stair
@@ -2484,6 +2728,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &164459475295226906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385897217670698784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4462401919975441999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2667,6 +2923,7 @@ GameObject:
   - component: {fileID: 1750720247170240888}
   - component: {fileID: 2578477622448089993}
   - component: {fileID: 4446257574446112811}
+  - component: {fileID: 1276278723973779132}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: stair
@@ -2761,6 +3018,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1276278723973779132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502243257289034895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4580625532106283462
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,6 +3213,7 @@ GameObject:
   - component: {fileID: 5971542523210886725}
   - component: {fileID: 1568516518674459935}
   - component: {fileID: 3813059928779725011}
+  - component: {fileID: 1944759068553868560}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: stair
@@ -3038,6 +3308,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1944759068553868560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4630444964865712454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4952192375168649291
 GameObject:
   m_ObjectHideFlags: 0
@@ -3905,6 +4187,7 @@ GameObject:
   - component: {fileID: 7305802041714929721}
   - component: {fileID: 4833203605981112018}
   - component: {fileID: 277182265007324087}
+  - component: {fileID: 5840131531598089218}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: stair
@@ -3999,6 +4282,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5840131531598089218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5463320207204211782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5541382242006815449
 GameObject:
   m_ObjectHideFlags: 0
@@ -4182,6 +4477,7 @@ GameObject:
   - component: {fileID: 1193804760876793754}
   - component: {fileID: 1175213285733670720}
   - component: {fileID: 2740737630638977774}
+  - component: {fileID: 7290119245141457385}
   m_Layer: 0
   m_Name: Cube (15)
   m_TagString: stair
@@ -4276,6 +4572,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7290119245141457385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5847093665844879205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5996905206616106388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4288,6 +4596,7 @@ GameObject:
   - component: {fileID: 1339129133050575514}
   - component: {fileID: 937830499324746645}
   - component: {fileID: 8447278966268967073}
+  - component: {fileID: 3060083612740867712}
   m_Layer: 0
   m_Name: Cube
   m_TagString: stair
@@ -4382,6 +4691,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3060083612740867712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996905206616106388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6052465746863449304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4907,6 +5228,7 @@ GameObject:
   - component: {fileID: 7444408109563853817}
   - component: {fileID: 6175978959449007705}
   - component: {fileID: 5450815306355285466}
+  - component: {fileID: 6481522939439726179}
   m_Layer: 0
   m_Name: Cube (17)
   m_TagString: stair
@@ -5001,6 +5323,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6481522939439726179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542522979654003775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6747335118355711548
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,6 +5347,7 @@ GameObject:
   - component: {fileID: 8260817592292594715}
   - component: {fileID: 3915952627955785359}
   - component: {fileID: 3671860804459712187}
+  - component: {fileID: 1984866310721180493}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: stair
@@ -5107,6 +5442,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1984866310721180493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6747335118355711548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6769783262106032638
 GameObject:
   m_ObjectHideFlags: 0
@@ -5461,6 +5808,7 @@ GameObject:
   - component: {fileID: 2523247246310562818}
   - component: {fileID: 4367527678968840641}
   - component: {fileID: 3142299582240349039}
+  - component: {fileID: 4569778742970797437}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: stair
@@ -5555,6 +5903,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4569778742970797437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6990909656433156443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7358946939334950377
 GameObject:
   m_ObjectHideFlags: 0
@@ -5567,6 +5927,7 @@ GameObject:
   - component: {fileID: 4102183128595738003}
   - component: {fileID: 1781424855704165924}
   - component: {fileID: 1258989528459903943}
+  - component: {fileID: 2694929182500554926}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: stair
@@ -5661,6 +6022,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2694929182500554926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7358946939334950377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7470589396468424496
 GameObject:
   m_ObjectHideFlags: 0
@@ -5844,6 +6217,7 @@ GameObject:
   - component: {fileID: 4847842716394356290}
   - component: {fileID: 6897726546753224359}
   - component: {fileID: 6145637933020053926}
+  - component: {fileID: 6470200921172918694}
   m_Layer: 0
   m_Name: Cube (22)
   m_TagString: stair
@@ -5938,6 +6312,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6470200921172918694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7529864606805079854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7613456007917743169
 GameObject:
   m_ObjectHideFlags: 0
@@ -6121,6 +6507,7 @@ GameObject:
   - component: {fileID: 7318548559574350465}
   - component: {fileID: 7287218341521305680}
   - component: {fileID: 526701512760897126}
+  - component: {fileID: 4509613267242370455}
   m_Layer: 0
   m_Name: Cube (20)
   m_TagString: stair
@@ -6215,6 +6602,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4509613267242370455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746172288323349162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8007993790850447258
 GameObject:
   m_ObjectHideFlags: 0
@@ -6227,6 +6626,7 @@ GameObject:
   - component: {fileID: 289537993209954872}
   - component: {fileID: 7683937567456827099}
   - component: {fileID: 73360524998832280}
+  - component: {fileID: 5795149688543288746}
   m_Layer: 0
   m_Name: Cube (24)
   m_TagString: stair
@@ -6321,6 +6721,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5795149688543288746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8007993790850447258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8197608729471856320
 GameObject:
   m_ObjectHideFlags: 0
@@ -6333,6 +6745,7 @@ GameObject:
   - component: {fileID: 7348747420648924422}
   - component: {fileID: 5036840998301777118}
   - component: {fileID: 2833297373451109834}
+  - component: {fileID: 2012452560351777434}
   m_Layer: 0
   m_Name: Cube (13)
   m_TagString: stair
@@ -6427,6 +6840,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2012452560351777434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8197608729471856320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8519972477791295037
 GameObject:
   m_ObjectHideFlags: 0
@@ -6610,6 +7035,7 @@ GameObject:
   - component: {fileID: 4041762792228657608}
   - component: {fileID: 3880871894898165296}
   - component: {fileID: 4317792432114786235}
+  - component: {fileID: 3770742959854745702}
   m_Layer: 0
   m_Name: Cube (12)
   m_TagString: stair
@@ -6704,6 +7130,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3770742959854745702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620060701183358925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8621676203733837997
 GameObject:
   m_ObjectHideFlags: 0
@@ -6716,6 +7154,7 @@ GameObject:
   - component: {fileID: 2319096808804235754}
   - component: {fileID: 8308989770007191455}
   - component: {fileID: 2010730442130013648}
+  - component: {fileID: 6893311758082731925}
   m_Layer: 0
   m_Name: Cube (10)
   m_TagString: stair
@@ -6810,6 +7249,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6893311758082731925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621676203733837997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029a1520b59e8854bad92ac7e7e0b067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9178944831318917689
 GameObject:
   m_ObjectHideFlags: 0

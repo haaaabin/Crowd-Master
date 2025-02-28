@@ -58,6 +58,10 @@ public class StickManManager : MonoBehaviour
 
                 anim.SetBool("run", false);
 
+                {
+                    StairSoundManager.instance.PlayNote(stair.GetStairIndex());
+                }
+
                 if (!PlayerManager.instance.moveTheCamera)
                     PlayerManager.instance.moveTheCamera = true;
 
