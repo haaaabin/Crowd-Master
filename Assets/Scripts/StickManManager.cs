@@ -11,7 +11,7 @@ public class StickManManager : MonoBehaviour
     private CapsuleCollider coll;
     private Animator anim;
 
-    void Start()
+    private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         coll = GetComponent<CapsuleCollider>();
@@ -27,63 +27,66 @@ public class StickManManager : MonoBehaviour
         GameManager.setGameDelegate -= OnGameAnimState;
     }
 
-    private void OnMenuAnimState()
-    {
-        anim.SetBool("run", false);
-    }
-    private void OnGameAnimState()
-    {
-        anim.SetBool("run", true);
-    }
+    private void OnMenuAnimState() => anim.SetBool("run", false);
+    private void OnGameAnimState() => anim.SetBool("run", true);
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
             case "red":
-                Instantiate(blood, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+                Instantiate(blood, transform.position, Quaternion.identity);
                 break;
 
             case "ramp":
-
-                if (transform != null && transform.gameObject.activeSelf)
-                    transform.DOJump(transform.position, 3f, 1, 1).SetEase(Ease.Flash).OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1.3f)));
+                if (gameObject.activeSelf)
+                    transform.DOJump(transform.position, 3f, 1, 1)
+                            .SetEase(Ease.Flash)
+                            .OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1.3f)));
                 break;
 
             case "stair":
-                transform.parent.parent = null;
-                transform.parent = null;
-                coll.isTrigger = false;
-                rigid.isKinematic = false;
-
-                anim.SetBool("run", false);
-
-                if (other.TryGetComponent(out Stair stair))
-                {
-                    StairSoundManager.instance.PlayNote(stair.GetStairIndex());
-                }
-
-                if (!PlayerManager.instance.moveTheCamera)
-                    PlayerManager.instance.moveTheCamera = true;
-
-                if (PlayerManager.instance.transform.childCount == 0)
-                {
-                    StartCoroutine(ChangeStairRender(other));
-                    StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, UpdateTextWithScore(other.gameObject)));
-                }
-
+                HandleStairTrigger(other);
                 break;
 
             case "Prop":
-                if (PlayerManager.instance.numberOfStickmans > 0)
-                {
-                    ObjectPool.instance.ReturnPlayerObject(transform.gameObject); // 객체 풀로 반환
-                    Instantiate(blood, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-
-                    PlayerManager.instance.numberOfStickmans--;
-                    PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
-                }
+                HandlePropTrigger();
                 break;
+        }
+    }
+
+    private void HandleStairTrigger(Collider other)
+    {
+        transform.parent.parent = null;
+        transform.parent = null;
+        coll.isTrigger = false;
+        rigid.isKinematic = false;
+        anim.SetBool("run", false);
+
+        if (other.TryGetComponent(out Stair stair))
+        {
+            StairSoundManager.instance.PlayNote(stair.GetStairIndex());
+        }
+
+        if (!PlayerManager.instance.moveTheCamera)
+            PlayerManager.instance.moveTheCamera = true;
+
+        if (PlayerManager.instance.transform.childCount == 0)
+        {
+            StartCoroutine(ChangeStairRender(other));
+            StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, GetStairScore(other)));
+        }
+    }
+
+    private void HandlePropTrigger()
+    {
+        if (PlayerManager.instance.numberOfStickmans > 0)
+        {
+            ObjectPool.instance.ReturnPlayerObject(transform.gameObject); // 객체 풀로 반환
+            Instantiate(blood, transform.position, Quaternion.identity);
+
+            PlayerManager.instance.numberOfStickmans--;
+            PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
         }
     }
 
@@ -91,12 +94,13 @@ public class StickManManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        Renderer stairRender = other.GetComponent<Renderer>();
-        if (stairRender != null)
+        if (other.TryGetComponent(out Renderer stairRender))
         {
-            stairRender.material.DOColor(new Color(0.4f, 0.98f, 0.65f), 0.5f).SetLoops(1000, LoopType.Yoyo)
+            stairRender.material.DOColor(new Color(0.4f, 0.98f, 0.65f), 0.5f)
+                .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.Flash);
         }
+
         yield return new WaitForSeconds(0.01f);
         GameManager.Instance().ChangeState(GameManager.GameState.LEVELCOMPLETE);
 
@@ -108,17 +112,14 @@ public class StickManManager : MonoBehaviour
         PlayerManager.instance.FormatStickMan();
     }
 
-    private float UpdateTextWithScore(GameObject gameObject)
+    private float GetStairScore(Collider other)
     {
-        string scoreText = Regex.Match(gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text, @"\d+(\.\d+)?").Value;
+        if (other.transform.GetChild(0).TryGetComponent(out TextMeshPro textMesh))
+        {
+            string scoreText = Regex.Match(textMesh.text, @"\d+(\.\d+)?").Value;
+            return float.TryParse(scoreText, out float number) ? number : 0;
+        }
 
-        if (float.TryParse(scoreText, out float number))
-        {
-            return number;
-        }
-        else
-        {
-            return 0f;
-        }
+        return 0f;
     }
 }
