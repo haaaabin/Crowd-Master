@@ -58,6 +58,7 @@ public class StickManManager : MonoBehaviour
 
                 anim.SetBool("run", false);
 
+                if (other.TryGetComponent(out Stair stair))
                 {
                     StairSoundManager.instance.PlayNote(stair.GetStairIndex());
                 }
