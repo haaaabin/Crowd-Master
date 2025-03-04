@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameState.GAMEOVER:
                     setGameOverDelegate?.Invoke();
+                    SoundManager.Instance.Play("GameOver", SoundType.EFFECT);
                     break;
                 case GameState.SETTINGS:
                     setSettingsDelegate?.Invoke();
@@ -146,7 +147,5 @@ public class GameManager : MonoBehaviour
         Transform levelTransform = levelsParent.transform.GetChild(childIndex);
         currentLevel = levelTransform.gameObject;
         currentLevel.SetActive(true);
-
-        Debug.Log("Current Level: " + currentLevel.name); // 현재 활성화된 레벨 출력
     }
 }

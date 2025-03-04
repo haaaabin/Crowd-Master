@@ -19,12 +19,17 @@ public class UIManager : MonoBehaviour
     public Button nextBtn;
     public Button replyBtn;
     public Button settingBtn;
+    public Button closeSettingBtn;
+    public Button soundBtn;
+    public Button vibrationBtn;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
     public Text levelText;
 
     private float score = 0f;
+    private bool isSoundOn;
+    private bool isVibrationOn;
 
     void Awake()
     {
@@ -50,10 +55,11 @@ public class UIManager : MonoBehaviour
         if (tapToPlayBtn != null)
         {
             tapToPlayBtn.transform.DOScale(1.15f, 0.5f).SetLoops(1000, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-            tapToPlayBtn.onClick.AddListener(() =>
-            {
-                GameManager.Instance().ChangeState(GameManager.GameState.GAME);
-            });
+            tapToPlayBtn.onClick.AddListener(() => GameManager.Instance().ChangeState(GameManager.GameState.GAME));
+        }
+        if (settingBtn != null)
+        {
+            settingBtn.onClick.AddListener(() => GameManager.Instance().ChangeState(GameManager.GameState.SETTINGS));
         }
 
         coinText.text = PlayerPrefs.GetInt("CountCoin").ToString();
@@ -65,6 +71,7 @@ public class UIManager : MonoBehaviour
         GameManager.setGameDelegate += OnGameUI;
         GameManager.setGameOverDelegate += OnGameOverUI;
         GameManager.setLevelCompleteDelegate += OnLevelCompleteUI;
+        GameManager.setSettingsDelegate += OnSettingsUI;
     }
 
     private void OnDestroy()
@@ -73,6 +80,8 @@ public class UIManager : MonoBehaviour
         GameManager.setGameDelegate -= OnGameUI;
         GameManager.setGameOverDelegate -= OnGameOverUI;
         GameManager.setLevelCompleteDelegate -= OnLevelCompleteUI;
+        GameManager.setSettingsDelegate -= OnSettingsUI;
+
     }
 
     public IEnumerator UpdateScore(int numStickmans, float curscore)
@@ -130,4 +139,25 @@ public class UIManager : MonoBehaviour
         });
     }
 
+    private void OnSettingsUI()
+    {
+        settingsPanel.SetActive(true);
+
+        if (closeSettingBtn != null)
+            closeSettingBtn.onClick.AddListener(() => GameManager.Instance().ChangeState(GameManager.GameState.MENU));
+        
+        soundBtn.onClick.AddListener(() =>
+        {
+            if (isSoundOn)
+            {
+                isSoundOn = false;
+                // 효과음 Off, change sprite
+            }
+            else
+            {
+                isSoundOn = true;
+                //효과음 On
+            }
+        });
+    }
 }
