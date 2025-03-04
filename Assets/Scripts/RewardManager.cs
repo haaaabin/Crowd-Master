@@ -64,7 +64,7 @@ public class RewardManager : MonoBehaviour
             if (coin != null)
             {
                 coin.DOScale(1f, 0.2f).SetDelay(delay).SetEase(Ease.OutBack);
-                coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(-470f, 844), 1f).SetDelay(delay + 0.2f)
+                coin.GetComponent<RectTransform>().DOAnchorPos(new Vector3(-470f, 844), 1f).SetDelay(delay + 0.1f)
                     .OnStart(() =>
                     {
                         if (!hasStartedCoroutine)
@@ -74,7 +74,7 @@ public class RewardManager : MonoBehaviour
                         }
                     });
 
-                coin.DORotate(Vector3.zero, 0.3f).SetDelay(delay + 0.4f).SetEase(Ease.Flash);
+                coin.DORotate(Vector3.zero, 0.2f).SetDelay(delay + 0.3f).SetEase(Ease.Flash);
 
                 delay += 0.1f;
             }
@@ -90,7 +90,7 @@ public class RewardManager : MonoBehaviour
             currentCoinCount = i;
             counter.text = currentCoinCount.ToString();
             PlayerPrefs.SetInt("CountCoin", currentCoinCount);
-            yield return new WaitForSeconds(0.04f);
+            yield return new WaitForSeconds(0.01f);
         }
         PlayerPrefs.Save();
     }
