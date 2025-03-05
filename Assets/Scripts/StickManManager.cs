@@ -7,6 +7,8 @@ using UnityEngine;
 public class StickManManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem blood;
+    [SerializeField] private ParticleSystem blood2;
+
     private Rigidbody rigid;
     private CapsuleCollider coll;
     private Animator anim;
@@ -36,13 +38,14 @@ public class StickManManager : MonoBehaviour
         {
             case "red":
                 Instantiate(blood, transform.position, Quaternion.identity);
+                GameManager.Instance().soundManager.Play("Runners Added", SoundType.EFFECT, 0.5f, 0.5f);
                 break;
 
             case "ramp":
                 if (gameObject.activeSelf)
                     transform.DOJump(transform.position, 3f, 1, 1)
                             .SetEase(Ease.Flash)
-                            .OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1.3f)));
+                            .OnComplete(() => PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1f)));
                 break;
 
             case "stair":
@@ -83,7 +86,7 @@ public class StickManManager : MonoBehaviour
         if (PlayerManager.instance.numberOfStickmans > 0)
         {
             ObjectPool.instance.ReturnPlayerObject(transform.gameObject); // 객체 풀로 반환
-            Instantiate(blood, transform.position, Quaternion.identity);
+            Instantiate(blood2, transform.position, Quaternion.identity);
 
             PlayerManager.instance.numberOfStickmans--;
             PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
