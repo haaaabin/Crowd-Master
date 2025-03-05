@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     public Text levelText;
 
     private float score = 0f;
-    private bool isSoundOn;
+    private bool isSoundOn = true;
     private bool isVibrationOn;
 
     void Awake()
@@ -59,9 +59,12 @@ public class UIManager : MonoBehaviour
         }
         if (settingBtn != null)
         {
-            settingBtn.onClick.AddListener(() => GameManager.Instance().ChangeState(GameManager.GameState.SETTINGS));
+            settingBtn.onClick.AddListener(() => 
+            {
+                GameManager.Instance().soundManager.Play("Click");
+                GameManager.Instance().ChangeState(GameManager.GameState.SETTINGS);
+            });
         }
-
         coinText.text = PlayerPrefs.GetInt("CountCoin").ToString();
     }
 
@@ -148,15 +151,22 @@ public class UIManager : MonoBehaviour
         
         soundBtn.onClick.AddListener(() =>
         {
+            GameManager.Instance().soundManager.Play("Click");
+
             if (isSoundOn)
             {
-                isSoundOn = false;
                 // 효과음 Off, change sprite
+                isSoundOn = false;
+                AudioListener.volume = 0f;
+                Debug.Log("volume 0");
             }
             else
             {
-                isSoundOn = true;
                 //효과음 On
+                isSoundOn = true;
+                AudioListener.volume = 1f;
+                Debug.Log("volume 1");
+            
             }
         });
     }

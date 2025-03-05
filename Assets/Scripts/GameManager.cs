@@ -42,7 +42,9 @@ public class GameManager : MonoBehaviour
     public GameObject currentLevel;
     public GameObject levelsParent;
 
-    void Awake()
+    public SoundManager soundManager = new SoundManager();
+
+    private void Awake()
     {
         if (instance == null)
         {
@@ -55,17 +57,11 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
     }
 
-    void Start()
+    private void Start()
     {
-        SoundManager.Instance.Init();
-    }
-
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        soundManager.Init();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -108,7 +104,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case GameState.GAMEOVER:
                     setGameOverDelegate?.Invoke();
-                    SoundManager.Instance.Play("GameOver", SoundType.EFFECT);
+                    soundManager.Play("GameOver", SoundType.EFFECT);
                     break;
                 case GameState.SETTINGS:
                     setSettingsDelegate?.Invoke();
@@ -153,5 +149,11 @@ public class GameManager : MonoBehaviour
         Transform levelTransform = levelsParent.transform.GetChild(childIndex);
         currentLevel = levelTransform.gameObject;
         currentLevel.SetActive(true);
+    }
+
+    
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

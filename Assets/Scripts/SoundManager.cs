@@ -10,19 +10,8 @@ public enum SoundType
 
 public class SoundManager
 {
-    public static SoundManager Instance { get; private set; } // 외부에서 접근 가능, 변경 불가능
-
     public AudioSource[] audioSources = new AudioSource[(int)SoundType.MAXCOUNT];
     private Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>(); // 사운드 파일을 저장할 딕셔너리 <경로, 해당 오디오 클립> -> Object Pooling
-
-    //private 생성자 : 외부에서 생성 불가능
-    private SoundManager() { }
-
-    // 정적 생성자 : 클래스 로드 시 호출되며, 단 한 번 실행
-    static SoundManager()
-    {
-        Instance = new SoundManager();
-    }
 
     private AudioClip GetOrAddAudioClip(string path, SoundType type = SoundType.EFFECT)
     {
