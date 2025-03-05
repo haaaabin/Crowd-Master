@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
+
+    void Start()
+    {
+        SoundManager.Instance.Init();
     }
 
     void OnDestroy()
