@@ -283,6 +283,8 @@ public class PlayerManager : MonoBehaviour
 
         if (other.CompareTag("Finish"))
         {
+            GameManager.Instance().soundManager.Play("Finish");
+
             isFinish = true;
             moveByTouch = false;
             moveTheCamera = true;
@@ -291,6 +293,8 @@ public class PlayerManager : MonoBehaviour
             secondCam.SetActive(true);
             Tower.instance.CreateTower(transform.childCount);
             numberOfStickmans = transform.childCount;
+            
+            ObjectPool.instance.ClearEnemyObjects();
         }
     }
 
@@ -306,7 +310,7 @@ public class PlayerManager : MonoBehaviour
         while (numberOfStickmans > 0 && numberOfEnemyStickmans > 0)
         {
             Transform enemyStickman = enemy.transform.GetChild(1).GetChild(numberOfEnemyStickmans - 1);
-            Destroy(enemyStickman.gameObject);
+            ObjectPool.instance.ReturnEnemyObject(enemyStickman.gameObject); // 객체 풀로 반환
             numberOfEnemyStickmans--;
             enemy.transform.GetChild(1).GetComponent<EnemyManager>().counterTxt.text = numberOfEnemyStickmans.ToString();
 

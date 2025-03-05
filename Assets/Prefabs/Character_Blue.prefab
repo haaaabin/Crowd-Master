@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blood: {fileID: 7673296222006189919, guid: 4defbd4232a3b204ca8a086f9eca7f44, type: 3}
+  blood2: {fileID: 7673296222006189919, guid: dddd7e29a0d82a540a5495b82d380b10, type: 3}

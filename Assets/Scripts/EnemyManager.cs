@@ -14,9 +14,15 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        for (int i = 0; i < Random.Range(20, 120); i++)
+        int enemyCount = Random.Range(20,50);
+        for (int i = 0; i < enemyCount; i++)
         {
-            Instantiate(stickMan, transform.position, new Quaternion(0f, 180f, 0f, 1f), transform);
+            // Instantiate(stickMan, transform.position, new Quaternion(0f, 180f, 0f, 1f), transform);
+            GameObject newEnemy = ObjectPool.instance.GetEnemyObject();
+            newEnemy.transform.SetParent(transform);
+            newEnemy.transform.position = transform.position;
+            newEnemy.transform.rotation = Quaternion.identity;
+            newEnemy.SetActive(true);
         }
 
         counterTxt.text = transform.childCount.ToString();
