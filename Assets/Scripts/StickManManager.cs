@@ -65,7 +65,7 @@ public class StickManManager : MonoBehaviour
 
         if (other.TryGetComponent(out Stair stair))
         {
-            StairSoundManager.instance.PlayNote(stair.GetStairIndex());
+            StairSoundManager.instance.PlayNote(stair.GetStairIndex(), other.GetComponentInParent<AudioSource>());
         }
 
         if (!PlayerManager.instance.moveTheCamera)
