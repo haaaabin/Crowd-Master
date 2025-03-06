@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StickManManager : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class StickManManager : MonoBehaviour
     private Rigidbody rigid;
     private CapsuleCollider coll;
     private Animator anim;
+
+    private float lastSoundTime = 0f;
+    private float soundCooldown = 1f;
 
     private void Awake()
     {
@@ -37,8 +41,13 @@ public class StickManManager : MonoBehaviour
         switch (other.tag)
         {
             case "red":
-                Instantiate(blood, transform.position, Quaternion.identity);
-                GameManager.Instance().soundManager.Play("Runners Added", SoundType.EFFECT, 0.5f, 0.5f);
+                Instantiate(blood, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+
+                if (Time.time - lastSoundTime >= soundCooldown)
+                {
+                    GameManager.Instance().soundManager.Play("Runner Died", SoundType.EFFECT, 1f, 0.008f);
+                    lastSoundTime = Time.time;
+                }
                 break;
 
             case "ramp":
@@ -74,7 +83,7 @@ public class StickManManager : MonoBehaviour
         if (!PlayerManager.instance.moveTheCamera)
             PlayerManager.instance.moveTheCamera = true;
 
-        if (PlayerManager.instance.transform.childCount == 0)
+        if (PlayerManager.instance.transform.childCount == 1)
         {
             StartCoroutine(ChangeStairRender(other));
             StartCoroutine(UIManager.instance.UpdateScore(PlayerManager.instance.numberOfStickmans, GetStairScore(other)));
@@ -90,7 +99,11 @@ public class StickManManager : MonoBehaviour
 
             PlayerManager.instance.numberOfStickmans--;
             PlayerManager.instance.counterTxt.text = PlayerManager.instance.numberOfStickmans.ToString();
+
+            GameManager.Instance().soundManager.Play("Runner Died", SoundType.EFFECT, 0.5f, 0.5f);
         }
+        PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(0.6f));
+
     }
 
     IEnumerator ChangeStairRender(Collider other)
