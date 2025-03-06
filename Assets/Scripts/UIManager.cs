@@ -23,6 +23,9 @@ public class UIManager : MonoBehaviour
     public Button soundBtn;
     public Button vibrationBtn;
 
+    public Sprite soundOnImage;
+    public Sprite soundOffImage;
+
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
     public Text levelText;
@@ -59,13 +62,14 @@ public class UIManager : MonoBehaviour
         }
         if (settingBtn != null)
         {
-            settingBtn.onClick.AddListener(() => 
+            settingBtn.onClick.AddListener(() =>
             {
                 GameManager.Instance().soundManager.Play("Click");
                 GameManager.Instance().ChangeState(GameManager.GameState.SETTINGS);
             });
         }
         coinText.text = PlayerPrefs.GetInt("CountCoin").ToString();
+        soundBtn.image.sprite = soundOnImage;
     }
 
     private void RegisterDelegate()
@@ -98,6 +102,7 @@ public class UIManager : MonoBehaviour
 
         scoreText.text = $"+ {roundedScore}";
         RewardManager.instance.RewardPileOfCoin(roundedScore);
+        GameManager.Instance().soundManager.Play("Coin");
     }
 
     private void OnMenuUI()
@@ -148,7 +153,7 @@ public class UIManager : MonoBehaviour
 
         if (closeSettingBtn != null)
             closeSettingBtn.onClick.AddListener(() => GameManager.Instance().ChangeState(GameManager.GameState.MENU));
-        
+
         soundBtn.onClick.AddListener(() =>
         {
             GameManager.Instance().soundManager.Play("Click");
@@ -158,6 +163,9 @@ public class UIManager : MonoBehaviour
                 // 효과음 Off, change sprite
                 isSoundOn = false;
                 AudioListener.volume = 0f;
+
+                soundBtn.image.sprite = soundOffImage;
+                soundBtn.image.color = Color.gray;
                 Debug.Log("volume 0");
             }
             else
@@ -165,8 +173,12 @@ public class UIManager : MonoBehaviour
                 //효과음 On
                 isSoundOn = true;
                 AudioListener.volume = 1f;
+
+                soundBtn.image.sprite = soundOnImage;
+                soundBtn.image.color = new Color(70f / 255f, 166f / 255f, 56f / 255f);
+
                 Debug.Log("volume 1");
-            
+
             }
         });
     }
