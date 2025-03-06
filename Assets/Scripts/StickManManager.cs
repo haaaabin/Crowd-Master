@@ -104,7 +104,7 @@ public class StickManManager : MonoBehaviour
 
             GameManager.Instance().soundManager.Play("Runner Died", SoundType.EFFECT, 0.5f, 0.5f);
         }
-        PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(0.6f));
+        PlayerManager.instance.StartCoroutine(DelayedFormatStickMan(1f));
 
     }
 
