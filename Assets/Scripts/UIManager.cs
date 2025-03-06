@@ -112,6 +112,7 @@ public class UIManager : MonoBehaviour
         levelCompletePanel.SetActive(false);
         settingsPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+        coinText.text = PlayerPrefs.GetInt("CountCoin").ToString();
     }
 
     private void OnGameUI()
@@ -132,6 +133,12 @@ public class UIManager : MonoBehaviour
             GameManager.Instance().ChangeState(GameManager.GameState.MENU);
             GameManager.Instance().SetNextLevel();
         });
+
+        if (GameManager.Instance().currentLevel.name == "Level3")
+        {
+            nextBtn.onClick.RemoveAllListeners();
+            nextBtn.GetComponentInChildren<Text>().text = "Clear";
+        }
     }
 
     private void OnGameOverUI()
