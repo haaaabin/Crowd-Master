@@ -90,7 +90,7 @@ public class RewardManager : MonoBehaviour
             currentCoinCount = i;
             counter.text = currentCoinCount.ToString();
             PlayerPrefs.SetInt("CountCoin", currentCoinCount);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.02f);
         }
         PlayerPrefs.Save();
     }

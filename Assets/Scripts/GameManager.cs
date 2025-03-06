@@ -72,11 +72,12 @@ public class GameManager : MonoBehaviour
         }
 
         ChangeLevel();
-        
+
         if (ProgressBar.instance.finishLine == null || ProgressBar.instance.player == null)
         {
             ProgressBar.instance.finishLine = currentLevel.transform.Find("FinishLine").gameObject.transform;
-            ProgressBar.instance.player = PlayerManager.instance.transform;
+            GameObject player = GameObject.FindWithTag("Player");
+            ProgressBar.instance.player = player.transform;
         }
 
         if (PlayerManager.instance.road == null)
@@ -151,7 +152,7 @@ public class GameManager : MonoBehaviour
         currentLevel.SetActive(true);
     }
 
-    
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
