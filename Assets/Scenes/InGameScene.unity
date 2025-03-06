@@ -2796,13 +2796,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4679940870090085607, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1642647175812361109, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
 --- !u!4 &530119784 stripped
 Transform:
@@ -3117,13 +3111,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4679940870090085607, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1642647175812361109, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a59e481f3e9cf7246bde32f336b1331d, type: 3}
 --- !u!4 &601772241 stripped
 Transform:
@@ -4233,7 +4221,7 @@ MonoBehaviour:
   distanceFactor: 0.4
   radius: 1
   moveByTouch: 0
-  playerSpeed: 10
+  playerSpeed: 12
   roadSpeed: 6
   secondCam: {fileID: 1570755372}
   isFinish: 0
@@ -10218,82 +10206,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4952192375168649291, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1231039457567825399, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4580625532106283462, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8519972477791295037, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6864971345952779719, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1104015193232739896, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 9178944831318917689, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2021778226146643022, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 3758511373543337249, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1091257745727420964, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 454815380704230812, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 716025865980467448, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5377943767536109182, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7613456007917743169, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6769783262106032638, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5295320072050230396, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5541382242006815449, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5313002161214388304, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6541426454674271188, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5210497721078370885, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6069337035498070791, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6052465746863449304, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 672544041863182453, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7470589396468424496, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4462401919975441999, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f71de31270cb6aa43aaf150e496aedd5, type: 3}
 --- !u!4 &1832316282 stripped
 Transform:
