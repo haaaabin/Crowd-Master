@@ -1,10 +1,12 @@
 # Hyper-Casual-Game
 
 <a name="readme-top"></a>
-
 <p>
   Unity 3D 모바일 하이퍼 캐쥬얼 게임
 </p>
+
+![Image](https://github.com/user-attachments/assets/942bb46c-edb2-4b24-bf0f-b01ffb8b546e)
+
 <br/>
 
 <!-- TABLE OF CONTENTS -->
@@ -32,7 +34,6 @@
 
 <a name="Play"></a>
 ## 게임 플레이
-
 <br/>
 
 <a name="CoreFeatures"></a>
