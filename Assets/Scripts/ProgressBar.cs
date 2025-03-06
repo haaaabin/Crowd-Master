@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
@@ -20,9 +21,22 @@ public class ProgressBar : MonoBehaviour
 
     void Start()
     {
-        player = PlayerManager.instance.transform;
-        finishLine = GameManager.Instance().currentLevel.transform.Find("FinishLine").gameObject.transform;
-        startDistance = Mathf.Abs(player.position.z - finishLine.position.z);
+        InitProgressBar();
+    }
+
+    public void InitProgressBar()
+    {
+        if (GameManager.Instance().currentLevel != null)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+            finishLine = GameManager.Instance().currentLevel.transform.Find("FinishLine").gameObject.transform;
+            startDistance = Mathf.Abs(player.position.z - finishLine.position.z);
+        }
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Update()
@@ -44,4 +58,16 @@ public class ProgressBar : MonoBehaviour
 
         progressBar.value = progress;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitProgressBar();
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+    }
+
 }
