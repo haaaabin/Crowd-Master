@@ -1,4 +1,4 @@
-# Hyper-Casual-Game
+# Crowd Master
 
 <a name="readme-top"></a>
 <p>
