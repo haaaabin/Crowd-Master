@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,20 +25,11 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState = GameState.MENU;
 
-    public delegate void SetMenuDelegate();
-    public static SetMenuDelegate setMenuDelegate;
-
-    public delegate void SetGameDelegate();
-    public static SetGameDelegate setGameDelegate;
-
-    public delegate void SetLevelCompleteDelegate();
-    public static SetLevelCompleteDelegate setLevelCompleteDelegate;
-
-    public delegate void SetGameOverDelegate();
-    public static SetGameOverDelegate setGameOverDelegate;
-
-    public delegate void SetSettingsDelegate();
-    public static SetSettingsDelegate setSettingsDelegate;
+    public static event Action setMenuEvent;
+    public static event Action setGameEvent;
+    public static event Action setLevelCompleteEvent;
+    public static event Action setGameOverEvent;
+    public static event Action setSettingsEvent;
 
     public GameObject currentLevel;
     public GameObject levelsParent;
@@ -95,20 +87,20 @@ public class GameManager : MonoBehaviour
             switch (gameState)
             {
                 case GameState.MENU:
-                    setMenuDelegate?.Invoke();
+                    setMenuEvent?.Invoke();
                     break;
                 case GameState.GAME:
-                    setGameDelegate?.Invoke();
+                    setGameEvent?.Invoke();
                     break;
                 case GameState.LEVELCOMPLETE:
-                    setLevelCompleteDelegate?.Invoke();
+                    setLevelCompleteEvent?.Invoke();
                     break;
                 case GameState.GAMEOVER:
-                    setGameOverDelegate?.Invoke();
+                    setGameOverEvent?.Invoke();
                     soundManager.Play("GameOver", SoundType.EFFECT);
                     break;
                 case GameState.SETTINGS:
-                    setSettingsDelegate?.Invoke();
+                    setSettingsEvent?.Invoke();
                     break;
             }
         }

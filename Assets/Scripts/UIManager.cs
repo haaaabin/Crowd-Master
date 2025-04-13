@@ -50,7 +50,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         InitalizeUI();
-        RegisterDelegate();
+        RegisterEvent();
     }
 
     private void InitalizeUI()
@@ -72,23 +72,22 @@ public class UIManager : MonoBehaviour
         soundBtn.image.sprite = soundOnImage;
     }
 
-    private void RegisterDelegate()
+    private void RegisterEvent()
     {
-        GameManager.setMenuDelegate += OnMenuUI;
-        GameManager.setGameDelegate += OnGameUI;
-        GameManager.setGameOverDelegate += OnGameOverUI;
-        GameManager.setLevelCompleteDelegate += OnLevelCompleteUI;
-        GameManager.setSettingsDelegate += OnSettingsUI;
+        GameManager.setMenuEvent += OnMenuUI;
+        GameManager.setGameEvent += OnGameUI;
+        GameManager.setGameOverEvent += OnGameOverUI;
+        GameManager.setLevelCompleteEvent += OnLevelCompleteUI;
+        GameManager.setSettingsEvent += OnSettingsUI;
     }
 
     private void OnDestroy()
     {
-        GameManager.setMenuDelegate -= OnMenuUI;
-        GameManager.setGameDelegate -= OnGameUI;
-        GameManager.setGameOverDelegate -= OnGameOverUI;
-        GameManager.setLevelCompleteDelegate -= OnLevelCompleteUI;
-        GameManager.setSettingsDelegate -= OnSettingsUI;
-
+        GameManager.setMenuEvent -= OnMenuUI;
+        GameManager.setGameEvent -= OnGameUI;
+        GameManager.setGameOverEvent -= OnGameOverUI;
+        GameManager.setLevelCompleteEvent -= OnLevelCompleteUI;
+        GameManager.setSettingsEvent -= OnSettingsUI;
     }
 
     public IEnumerator UpdateScore(int numStickmans, float curscore)

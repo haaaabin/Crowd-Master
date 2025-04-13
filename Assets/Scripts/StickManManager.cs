@@ -23,14 +23,14 @@ public class StickManManager : MonoBehaviour
         coll = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
 
-        GameManager.setMenuDelegate += OnMenuAnimState;
-        GameManager.setGameDelegate += OnGameAnimState;
+        GameManager.setMenuEvent += OnMenuAnimState;
+        GameManager.setGameEvent += OnGameAnimState;
     }
 
     void OnDestroy()
     {
-        GameManager.setMenuDelegate -= OnMenuAnimState;
-        GameManager.setGameDelegate -= OnGameAnimState;
+        GameManager.setMenuEvent -= OnMenuAnimState;
+        GameManager.setGameEvent -= OnGameAnimState;
     }
 
     private void OnMenuAnimState() => anim.SetBool("run", false);
